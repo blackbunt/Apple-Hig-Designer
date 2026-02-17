@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple HIG Design Tokens - Showcase</title>
+  <link rel="stylesheet" href="../references/design-tokens.css">
+  <style>
+    body {
+      background: var(--bg-grouped-primary);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      text-align: center;
+      padding: var(--space-16) var(--space-4) var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: clamp(34px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--label-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .page-header p {
+      font-size: 17px;
+      color: var(--label-secondary);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: var(--space-4);
+      right: var(--space-4);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 8px 16px;
+      background: var(--bg-grouped-secondary);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--separator);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--label-primary);
+    }
+
+    .theme-toggle:hover { box-shadow: var(--shadow-lg); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 var(--space-4) var(--space-16);
+    }
+
+    .showcase-card {
+      background: var(--bg-grouped-secondary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-4);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--label-secondary);
+      line-height: 1.5;
+    }
+
+    .card-preview {
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--separator);
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Color preview dots */
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-grouped-secondary);
+      box-shadow: 0 0 0 1px var(--separator);
+    }
+
+    /* Type preview */
+    .type-preview span {
+      display: block;
+      color: var(--label-primary);
+    }
+
+    /* Component preview */
+    .mini-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-system);
+      color: white;
+      background: var(--system-blue);
+      border: none;
+      border-radius: var(--radius-full);
+    }
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+      color: var(--system-green);
+      background: rgba(52, 199, 89, 0.12);
+    }
+
+    .mini-toggle {
+      width: 48px;
+      height: 22px;
+      background: var(--system-green);
+      border-radius: 22px;
+      position: relative;
+    }
+
+    .mini-toggle::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 18px;
+      background: white;
+      border-radius: 18px;
+      top: 2px;
+      right: 2px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    /* Layout preview */
+    .mini-layout {
+      width: 100%;
+      height: 48px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .mini-sidebar {
+      width: 30%;
+      background: var(--fill-quaternary);
+      border-right: 1px solid var(--separator);
+    }
+
+    .mini-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 6px;
+    }
+
+    .mini-bar {
+      height: 4px;
+      background: var(--fill-tertiary);
+      border-radius: 2px;
+    }
+
+    .mini-bar:first-child { width: 60%; }
+    .mini-bar:nth-child(2) { width: 80%; }
+    .mini-bar:nth-child(3) { width: 45%; }
+
+    .footer {
+      text-align: center;
+      padding: var(--space-8) var(--space-4);
+      color: var(--label-tertiary);
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--system-blue);
+      text-decoration: none;
+    }
+
+    /* Dark mode overrides for card hover */
+    [data-theme="dark"] .showcase-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <span id="theme-icon">&#9789;</span>
+    <span id="theme-label">Dark Mode</span>
+  </button>
+
+  <div class="page-header">
+    <h1>Apple HIG<br>Design Tokens</h1>
+    <p>Interaktive Vorschau aller Farben, Typografie, Komponenten und Layouts aus dem Apple Human Interface Guidelines Design-System.</p>
+  </div>
+
+  <div class="card-grid">
+    <a href="colors.html" class="showcase-card">
+      <div class="card-icon" style="background: linear-gradient(135deg, #007AFF, #AF52DE);">
+        <span style="filter: brightness(10);">&#9673;</span>
+      </div>
+      <div class="card-title">Farben</div>
+      <div class="card-desc">12 System-Farben, 6 Graustufen, Label-Hierarchie, Fills, Hintergründe und Separatoren.</div>
+      <div class="card-preview">
+        <span class="color-dot" style="background: var(--system-blue);"></span>
+        <span class="color-dot" style="background: var(--system-green);"></span>
+        <span class="color-dot" style="background: var(--system-orange);"></span>
+        <span class="color-dot" style="background: var(--system-red);"></span>
+        <span class="color-dot" style="background: var(--system-purple);"></span>
+        <span class="color-dot" style="background: var(--system-teal);"></span>
+        <span class="color-dot" style="background: var(--system-yellow);"></span>
+        <span class="color-dot" style="background: var(--system-pink);"></span>
+      </div>
+    </a>
+
+    <a href="typography.html" class="showcase-card">
+      <div class="card-icon" style="background: linear-gradient(135deg, #FF9500, #FF2D55);">
+        <span style="filter: brightness(10);">Aa</span>
+      </div>
+      <div class="card-title">Typografie</div>
+      <div class="card-desc">Komplette iOS Type-Scale von Large Title bis Caption, Display-Größen und Schriftgewichte.</div>
+      <div class="card-preview type-preview">
+        <span style="font-size: 22px; font-weight: 700;">Title</span>
+        <span style="font-size: 17px;">Body</span>
+        <span style="font-size: 13px; color: var(--label-secondary);">Footnote</span>
+      </div>
+    </a>
+
+    <a href="components.html" class="showcase-card">
+      <div class="card-icon" style="background: linear-gradient(135deg, #34C759, #5AC8FA);">
+        <span style="filter: brightness(10);">&#9881;</span>
+      </div>
+      <div class="card-title">Komponenten</div>
+      <div class="card-desc">Buttons, Toggles, Inputs, Segmented Controls, Slider, Badges, Cards, Alerts und mehr.</div>
+      <div class="card-preview">
+        <span class="mini-btn">Button</span>
+        <span class="mini-badge">Active</span>
+        <span class="mini-toggle"></span>
+      </div>
+    </a>
+
+    <a href="layouts.html" class="showcase-card">
+      <div class="card-icon" style="background: linear-gradient(135deg, #5856D6, #007AFF);">
+        <span style="filter: brightness(10);">&#9638;</span>
+      </div>
+      <div class="card-title">Layouts</div>
+      <div class="card-desc">Navigation Bar, Tab Bar, Sidebar, Hero-Section, Card-Grid, Settings-Liste, Tabellen und Zustände.</div>
+      <div class="card-preview">
+        <div class="mini-layout">
+          <div class="mini-sidebar"></div>
+          <div class="mini-content">
+            <div class="mini-bar"></div>
+            <div class="mini-bar"></div>
+            <div class="mini-bar"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="footer">
+    Apple HIG Design Tokens &middot; Verifiziert gegen Apple HIG, iOS UIKit, WWDC 2023-2025
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+        html.style.colorScheme = 'light';
+        document.getElementById('theme-icon').textContent = '\u263D';
+        document.getElementById('theme-label').textContent = 'Dark Mode';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        html.style.colorScheme = 'dark';
+        document.getElementById('theme-icon').textContent = '\u2600';
+        document.getElementById('theme-label').textContent = 'Light Mode';
+      }
+    }
+  </script>
+</body>
+</html>

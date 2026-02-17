@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typografie - Apple HIG Design Tokens</title>
+  <link rel="stylesheet" href="../references/design-tokens.css">
+  <style>
+    body {
+      background: var(--bg-grouped-primary);
+      padding-bottom: var(--space-16);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(29, 29, 31, 0.72);
+    }
+
+    .topbar-back {
+      font-size: 17px;
+      color: var(--system-blue);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .topbar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 14px;
+      background: var(--fill-tertiary);
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--label-primary);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .section {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--label-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-card {
+      background: var(--bg-grouped-secondary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: var(--space-4);
+      border-bottom: 0.5px solid var(--separator);
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .type-row:last-child { border-bottom: none; }
+
+    .type-sample {
+      flex: 1;
+      min-width: 0;
+      color: var(--label-primary);
+    }
+
+    .type-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+      gap: 2px;
+    }
+
+    .type-size {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .type-var {
+      font-size: 11px;
+      color: var(--label-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    .type-weight-label {
+      font-size: 11px;
+      color: var(--system-blue);
+      font-family: var(--font-mono);
+    }
+
+    /* Weight demo */
+    .weight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-3);
+      padding: var(--space-4);
+    }
+
+    .weight-item {
+      background: var(--bg-grouped-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      border: 1px solid var(--separator);
+    }
+
+    .weight-sample {
+      font-size: 28px;
+      color: var(--label-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .weight-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-primary);
+    }
+
+    .weight-value {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--label-secondary);
+    }
+
+    /* Font family demo */
+    .font-demo {
+      padding: var(--space-4);
+      border-bottom: 0.5px solid var(--separator);
+    }
+
+    .font-demo:last-child { border-bottom: none; }
+
+    .font-demo-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .font-demo-sample {
+      font-size: 24px;
+      color: var(--label-primary);
+      line-height: 1.4;
+    }
+
+    .font-demo-var {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--label-tertiary);
+      margin-top: var(--space-1);
+    }
+
+    /* Spacing demo */
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      padding: var(--space-2) var(--space-4);
+      border-bottom: 0.5px solid var(--separator);
+      gap: var(--space-3);
+    }
+
+    .spacing-row:last-child { border-bottom: none; }
+
+    .spacing-bar {
+      height: 24px;
+      background: var(--system-blue);
+      border-radius: 4px;
+      opacity: 0.8;
+    }
+
+    .spacing-label {
+      font-size: 13px;
+      font-family: var(--font-mono);
+      color: var(--label-secondary);
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+
+    .spacing-value {
+      font-size: 13px;
+      font-family: var(--font-mono);
+      color: var(--label-tertiary);
+      flex-shrink: 0;
+    }
+
+    /* Letter & paragraph example */
+    .text-example {
+      padding: var(--space-6);
+      line-height: 1.6;
+    }
+
+    .text-example p {
+      color: var(--label-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .text-example p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html" class="topbar-back">&#8249; Zurück</a>
+    <span class="topbar-title">Typografie</span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">&#9789;</span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </nav>
+
+  <div class="container">
+
+    <!-- iOS Type Scale -->
+    <div class="section">
+      <h2 class="section-title">iOS Type Scale</h2>
+      <div class="section-card">
+        <div class="type-row">
+          <div class="type-sample text-large-title">Large Title</div>
+          <div class="type-meta">
+            <span class="type-size">34px</span>
+            <span class="type-weight-label">bold</span>
+            <span class="type-var">--text-large-title</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-title1">Title 1</div>
+          <div class="type-meta">
+            <span class="type-size">28px</span>
+            <span class="type-weight-label">bold</span>
+            <span class="type-var">--text-title1</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-title2">Title 2</div>
+          <div class="type-meta">
+            <span class="type-size">22px</span>
+            <span class="type-weight-label">bold</span>
+            <span class="type-var">--text-title2</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-title3">Title 3</div>
+          <div class="type-meta">
+            <span class="type-size">20px</span>
+            <span class="type-weight-label">semibold</span>
+            <span class="type-var">--text-title3</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-headline">Headline</div>
+          <div class="type-meta">
+            <span class="type-size">17px</span>
+            <span class="type-weight-label">semibold</span>
+            <span class="type-var">--text-headline</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-body">Body</div>
+          <div class="type-meta">
+            <span class="type-size">17px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-body</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-callout">Callout</div>
+          <div class="type-meta">
+            <span class="type-size">16px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-callout</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-subhead">Subhead</div>
+          <div class="type-meta">
+            <span class="type-size">15px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-subhead</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-footnote">Footnote</div>
+          <div class="type-meta">
+            <span class="type-size">13px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-footnote</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-caption1">Caption 1</div>
+          <div class="type-meta">
+            <span class="type-size">12px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-caption1</span>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-sample text-caption2">Caption 2</div>
+          <div class="type-meta">
+            <span class="type-size">11px</span>
+            <span class="type-weight-label">regular</span>
+            <span class="type-var">--text-caption2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Sizes -->
+    <div class="section">
+      <h2 class="section-title">Display-Größen (Hero / Marketing)</h2>
+      <div class="section-card" style="padding: var(--space-6);">
+        <div style="margin-bottom: var(--space-6);">
+          <div class="text-display-sm" style="color: var(--label-primary);">Display Small</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-tertiary); margin-top: var(--space-1);">40px &middot; --text-display-sm</div>
+        </div>
+        <div style="margin-bottom: var(--space-6);">
+          <div class="text-display-md" style="color: var(--label-primary);">Display Medium</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-tertiary); margin-top: var(--space-1);">56px &middot; --text-display-md</div>
+        </div>
+        <div style="margin-bottom: var(--space-6);">
+          <div class="text-display-lg" style="color: var(--label-primary);">Display Large</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-tertiary); margin-top: var(--space-1);">80px &middot; --text-display-lg</div>
+        </div>
+        <div>
+          <div class="text-display-xl" style="color: var(--label-primary);">Display XL</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-tertiary); margin-top: var(--space-1);">96px &middot; --text-display-xl</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Weights -->
+    <div class="section">
+      <h2 class="section-title">Schriftgewichte</h2>
+      <div class="weight-grid">
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 100;">Ag</div>
+          <div class="weight-name">Ultralight</div>
+          <div class="weight-value">100</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 200;">Ag</div>
+          <div class="weight-name">Thin</div>
+          <div class="weight-value">200</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 300;">Ag</div>
+          <div class="weight-name">Light</div>
+          <div class="weight-value">300</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 400;">Ag</div>
+          <div class="weight-name">Regular</div>
+          <div class="weight-value">400</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 500;">Ag</div>
+          <div class="weight-name">Medium</div>
+          <div class="weight-value">500</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 600;">Ag</div>
+          <div class="weight-name">Semibold</div>
+          <div class="weight-value">600</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 700;">Ag</div>
+          <div class="weight-name">Bold</div>
+          <div class="weight-value">700</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 800;">Ag</div>
+          <div class="weight-name">Heavy</div>
+          <div class="weight-value">800</div>
+        </div>
+        <div class="weight-item">
+          <div class="weight-sample" style="font-weight: 900;">Ag</div>
+          <div class="weight-name">Black</div>
+          <div class="weight-value">900</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Families -->
+    <div class="section">
+      <h2 class="section-title">Schriftfamilien</h2>
+      <div class="section-card">
+        <div class="font-demo">
+          <div class="font-demo-name">System (SF Pro)</div>
+          <div class="font-demo-sample" style="font-family: var(--font-system);">The quick brown fox jumps over the lazy dog. 0123456789</div>
+          <div class="font-demo-var">--font-system</div>
+        </div>
+        <div class="font-demo">
+          <div class="font-demo-name">Monospace (SF Mono)</div>
+          <div class="font-demo-sample" style="font-family: var(--font-mono);">const x = fn(42); // code</div>
+          <div class="font-demo-var">--font-mono</div>
+        </div>
+        <div class="font-demo">
+          <div class="font-demo-name">Rounded (SF Pro Rounded)</div>
+          <div class="font-demo-sample" style="font-family: var(--font-rounded); font-weight: 600;">Friendly rounded type style</div>
+          <div class="font-demo-var">--font-rounded</div>
+        </div>
+        <div class="font-demo">
+          <div class="font-demo-name">Serif (New York)</div>
+          <div class="font-demo-sample" style="font-family: var(--font-serif);">Elegant serif for reading content</div>
+          <div class="font-demo-var">--font-serif</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacing Scale -->
+    <div class="section">
+      <h2 class="section-title">8pt Abstandssystem</h2>
+      <div class="section-card">
+        <div class="spacing-row">
+          <span class="spacing-label">--space-1</span>
+          <div class="spacing-bar" style="width: 4px;"></div>
+          <span class="spacing-value">4px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-2</span>
+          <div class="spacing-bar" style="width: 8px;"></div>
+          <span class="spacing-value">8px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-3</span>
+          <div class="spacing-bar" style="width: 12px;"></div>
+          <span class="spacing-value">12px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-4</span>
+          <div class="spacing-bar" style="width: 16px;"></div>
+          <span class="spacing-value">16px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-5</span>
+          <div class="spacing-bar" style="width: 20px;"></div>
+          <span class="spacing-value">20px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-6</span>
+          <div class="spacing-bar" style="width: 24px;"></div>
+          <span class="spacing-value">24px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-8</span>
+          <div class="spacing-bar" style="width: 32px;"></div>
+          <span class="spacing-value">32px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-10</span>
+          <div class="spacing-bar" style="width: 40px;"></div>
+          <span class="spacing-value">40px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-12</span>
+          <div class="spacing-bar" style="width: 48px;"></div>
+          <span class="spacing-value">48px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-16</span>
+          <div class="spacing-bar" style="width: 64px;"></div>
+          <span class="spacing-value">64px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-20</span>
+          <div class="spacing-bar" style="width: 80px;"></div>
+          <span class="spacing-value">80px</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-24</span>
+          <div class="spacing-bar" style="width: 96px;"></div>
+          <span class="spacing-value">96px</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text hierarchy example -->
+    <div class="section">
+      <h2 class="section-title">Text-Hierarchie im Kontext</h2>
+      <div class="section-card text-example">
+        <div class="text-large-title" style="color: var(--label-primary); margin-bottom: var(--space-2);">Einstellungen</div>
+        <p class="text-body" style="color: var(--label-secondary); margin-bottom: var(--space-6);">Verwalte dein Konto, Datenschutz und App-Einstellungen.</p>
+
+        <div class="text-title3" style="color: var(--label-primary); margin-bottom: var(--space-3);">Benachrichtigungen</div>
+        <p class="text-body" style="color: var(--label-primary);">Push-Benachrichtigungen ermöglichen es der App, dich über wichtige Updates zu informieren.</p>
+        <p class="text-footnote" style="color: var(--label-secondary); margin-top: var(--space-2);">Du kannst Benachrichtigungen jederzeit in den Systemeinstellungen deaktivieren.</p>
+
+        <div style="margin-top: var(--space-6);">
+          <span class="text-caption1" style="color: var(--label-tertiary);">Zuletzt aktualisiert: 16. Februar 2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+        html.style.colorScheme = 'light';
+        document.getElementById('theme-icon').textContent = '\u263D';
+        document.getElementById('theme-label').textContent = 'Dark';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        html.style.colorScheme = 'dark';
+        document.getElementById('theme-icon').textContent = '\u2600';
+        document.getElementById('theme-label').textContent = 'Light';
+      }
+    }
+  </script>
+</body>
+</html>

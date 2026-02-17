@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farben - Apple HIG Design Tokens</title>
+  <link rel="stylesheet" href="../references/design-tokens.css">
+  <style>
+    body {
+      background: var(--bg-grouped-primary);
+      padding-bottom: var(--space-16);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(29, 29, 31, 0.72);
+    }
+
+    .topbar-back {
+      font-size: 17px;
+      color: var(--system-blue);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .topbar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 14px;
+      background: var(--fill-tertiary);
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--label-primary);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .section {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--label-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-card {
+      background: var(--bg-grouped-secondary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Color swatch row */
+    .color-row {
+      display: flex;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      min-height: 56px;
+      border-bottom: 0.5px solid var(--separator);
+      gap: var(--space-3);
+    }
+
+    .color-row:last-child { border-bottom: none; }
+
+    .color-swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] .color-swatch {
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .color-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .color-name {
+      font-size: 17px;
+      color: var(--label-primary);
+      font-weight: 400;
+    }
+
+    .color-var {
+      font-size: 13px;
+      color: var(--label-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .color-hex {
+      font-size: 13px;
+      font-family: var(--font-mono);
+      color: var(--label-tertiary);
+      flex-shrink: 0;
+    }
+
+    /* Color palette grid */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-3);
+      padding: var(--space-4);
+    }
+
+    .palette-item {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-grouped-secondary);
+      border: 1px solid var(--separator);
+    }
+
+    .palette-color {
+      height: 80px;
+    }
+
+    .palette-info {
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .palette-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-primary);
+    }
+
+    .palette-value {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--label-secondary);
+    }
+
+    /* Opacity demo */
+    .opacity-strip {
+      display: flex;
+      height: 44px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--separator);
+    }
+
+    .opacity-block {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Background comparison */
+    .bg-compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3);
+      padding: var(--space-4);
+    }
+
+    .bg-sample {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--separator);
+      min-height: 100px;
+    }
+
+    .bg-sample-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .bg-sample-var {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--label-secondary);
+    }
+
+    .bg-sample-text {
+      margin-top: var(--space-3);
+      font-size: 15px;
+      color: var(--label-primary);
+    }
+
+    /* Glass demo -- based on real Liquid Glass implementations */
+    .glass-demo {
+      position: relative;
+      min-height: 280px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background:
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23007AFF"/><stop offset="33%" stop-color="%23AF52DE"/><stop offset="66%" stop-color="%23FF2D55"/><stop offset="100%" stop-color="%23FF9500"/></linearGradient></defs><rect fill="url(%23g)" width="400" height="400"/></svg>') center / cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      padding: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .glass-panel {
+      position: relative;
+      isolation: isolate;
+      padding: var(--space-5);
+      border-radius: var(--radius-lg);
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .glass-panel-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.55);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      margin-bottom: var(--space-2);
+    }
+
+    .glass-panel-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-panel-sub {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: rgba(255, 255, 255, 0.6);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      margin-top: var(--space-1);
+    }
+
+    /* Individual glass variant overrides */
+    .glass-variant-solid {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      box-shadow:
+        inset 1px 1px 1px rgba(255, 255, 255, 0.4),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-variant-solid .glass-panel-label { color: rgba(0, 0, 0, 0.45); text-shadow: none; }
+    .glass-variant-solid .glass-panel-title { color: #000; text-shadow: none; }
+    .glass-variant-solid .glass-panel-sub { color: rgba(0, 0, 0, 0.5); text-shadow: none; }
+
+    /* SVG Refraction panel (Chrome-only enhancement) */
+    .glass-variant-refract {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      box-shadow:
+        inset 1.5px 1.5px 1px rgba(255, 255, 255, 0.65),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.15),
+        0 0 24px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .glass-variant-refract .glass-panel-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: var(--space-2);
+      text-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html" class="topbar-back">&#8249; Zurück</a>
+    <span class="topbar-title">Farben</span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">&#9789;</span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </nav>
+
+  <div class="container">
+
+    <!-- System Colors as Grid -->
+    <div class="section">
+      <h2 class="section-title">System-Farben (12)</h2>
+      <div class="palette-grid">
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-blue);"></div>
+          <div class="palette-info"><div class="palette-name">Blue</div><div class="palette-value">--system-blue</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-green);"></div>
+          <div class="palette-info"><div class="palette-name">Green</div><div class="palette-value">--system-green</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-indigo);"></div>
+          <div class="palette-info"><div class="palette-name">Indigo</div><div class="palette-value">--system-indigo</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-orange);"></div>
+          <div class="palette-info"><div class="palette-name">Orange</div><div class="palette-value">--system-orange</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-pink);"></div>
+          <div class="palette-info"><div class="palette-name">Pink</div><div class="palette-value">--system-pink</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-purple);"></div>
+          <div class="palette-info"><div class="palette-name">Purple</div><div class="palette-value">--system-purple</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-red);"></div>
+          <div class="palette-info"><div class="palette-name">Red</div><div class="palette-value">--system-red</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-teal);"></div>
+          <div class="palette-info"><div class="palette-name">Teal</div><div class="palette-value">--system-teal</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-yellow);"></div>
+          <div class="palette-info"><div class="palette-name">Yellow</div><div class="palette-value">--system-yellow</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-cyan);"></div>
+          <div class="palette-info"><div class="palette-name">Cyan</div><div class="palette-value">--system-cyan</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-mint);"></div>
+          <div class="palette-info"><div class="palette-name">Mint</div><div class="palette-value">--system-mint</div></div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-color" style="background: var(--system-brown);"></div>
+          <div class="palette-info"><div class="palette-name">Brown</div><div class="palette-value">--system-brown</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gray Scale -->
+    <div class="section">
+      <h2 class="section-title">Graustufen (6 Ebenen)</h2>
+      <div class="section-card">
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray);"></div>
+          <div class="color-info"><div class="color-name">Gray</div><div class="color-var">--system-gray</div></div>
+          <div class="color-hex">#8E8E93</div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray2);"></div>
+          <div class="color-info"><div class="color-name">Gray 2</div><div class="color-var">--system-gray2</div></div>
+          <div class="color-hex">#AEAEB2</div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray3);"></div>
+          <div class="color-info"><div class="color-name">Gray 3</div><div class="color-var">--system-gray3</div></div>
+          <div class="color-hex">#C7C7CC</div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray4);"></div>
+          <div class="color-info"><div class="color-name">Gray 4</div><div class="color-var">--system-gray4</div></div>
+          <div class="color-hex">#D1D1D6</div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray5);"></div>
+          <div class="color-info"><div class="color-name">Gray 5</div><div class="color-var">--system-gray5</div></div>
+          <div class="color-hex">#E5E5EA</div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--system-gray6);"></div>
+          <div class="color-info"><div class="color-name">Gray 6</div><div class="color-var">--system-gray6</div></div>
+          <div class="color-hex">#F2F2F7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Label Colors -->
+    <div class="section">
+      <h2 class="section-title">Label-Farben (Text-Hierarchie)</h2>
+      <div class="section-card">
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--label-primary);"></div>
+          <div class="color-info">
+            <div class="color-name" style="color: var(--label-primary);">Primary Label</div>
+            <div class="color-var">--label-primary</div>
+          </div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--label-secondary);"></div>
+          <div class="color-info">
+            <div class="color-name" style="color: var(--label-secondary);">Secondary Label</div>
+            <div class="color-var">--label-secondary</div>
+          </div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--label-tertiary);"></div>
+          <div class="color-info">
+            <div class="color-name" style="color: var(--label-tertiary);">Tertiary Label</div>
+            <div class="color-var">--label-tertiary</div>
+          </div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--label-quaternary);"></div>
+          <div class="color-info">
+            <div class="color-name" style="color: var(--label-quaternary);">Quaternary Label</div>
+            <div class="color-var">--label-quaternary</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fill Colors -->
+    <div class="section">
+      <h2 class="section-title">Fill-Farben (Overlays)</h2>
+      <div class="section-card">
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--fill-primary);"></div>
+          <div class="color-info"><div class="color-name">Primary Fill</div><div class="color-var">--fill-primary &middot; opacity 0.20</div></div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--fill-secondary);"></div>
+          <div class="color-info"><div class="color-name">Secondary Fill</div><div class="color-var">--fill-secondary &middot; opacity 0.16</div></div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--fill-tertiary);"></div>
+          <div class="color-info"><div class="color-name">Tertiary Fill</div><div class="color-var">--fill-tertiary &middot; opacity 0.12</div></div>
+        </div>
+        <div class="color-row">
+          <div class="color-swatch" style="background: var(--fill-quaternary);"></div>
+          <div class="color-info"><div class="color-name">Quaternary Fill</div><div class="color-var">--fill-quaternary &middot; opacity 0.08</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Colors -->
+    <div class="section">
+      <h2 class="section-title">Hintergründe - Standard</h2>
+      <div class="bg-compare">
+        <div class="bg-sample" style="background: var(--bg-primary);">
+          <div class="bg-sample-label">Primary</div>
+          <div class="bg-sample-var">--bg-primary</div>
+          <div class="bg-sample-text">Haupthintergrund für Content</div>
+        </div>
+        <div class="bg-sample" style="background: var(--bg-secondary);">
+          <div class="bg-sample-label">Secondary</div>
+          <div class="bg-sample-var">--bg-secondary</div>
+          <div class="bg-sample-text">Sekundärer Hintergrund</div>
+        </div>
+        <div class="bg-sample" style="background: var(--bg-tertiary);">
+          <div class="bg-sample-label">Tertiary</div>
+          <div class="bg-sample-var">--bg-tertiary</div>
+          <div class="bg-sample-text">Dritte Ebene</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Hintergründe - Gruppiert (Settings-Stil)</h2>
+      <div class="bg-compare">
+        <div class="bg-sample" style="background: var(--bg-grouped-primary);">
+          <div class="bg-sample-label">Grouped Primary</div>
+          <div class="bg-sample-var">--bg-grouped-primary</div>
+          <div class="bg-sample-text">Seiten-Hintergrund</div>
+        </div>
+        <div class="bg-sample" style="background: var(--bg-grouped-secondary);">
+          <div class="bg-sample-label">Grouped Secondary</div>
+          <div class="bg-sample-var">--bg-grouped-secondary</div>
+          <div class="bg-sample-text">Karten auf dem Hintergrund</div>
+        </div>
+        <div class="bg-sample" style="background: var(--bg-grouped-tertiary);">
+          <div class="bg-sample-label">Grouped Tertiary</div>
+          <div class="bg-sample-var">--bg-grouped-tertiary</div>
+          <div class="bg-sample-text">Verschachtelter Inhalt</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separators -->
+    <div class="section">
+      <h2 class="section-title">Separatoren</h2>
+      <div class="section-card" style="padding: var(--space-4);">
+        <div style="margin-bottom: var(--space-4);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary); margin-bottom: var(--space-2);">Standard (transparent)</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary); margin-bottom: var(--space-2);">--separator</div>
+          <div style="height: 1px; background: var(--separator);"></div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary); margin-bottom: var(--space-2);">Opaque</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary); margin-bottom: var(--space-2);">--separator-opaque</div>
+          <div style="height: 1px; background: var(--separator-opaque);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glass Effects -->
+    <div class="section">
+      <h2 class="section-title">Liquid Glass (iOS 26 / WWDC 2025)</h2>
+      <div class="glass-demo">
+
+        <!-- Authentic Liquid Glass: low tint + inset shine + white text -->
+        <div class="glass-panel glass">
+          <div class="glass-panel-label">Liquid Glass</div>
+          <div class="glass-panel-title">Authentic Effect</div>
+          <div class="glass-panel-sub">.glass &middot; 18% tint + shine</div>
+        </div>
+
+        <!-- Nav/Tab glass: higher opacity for daily readability -->
+        <div class="glass-panel glass-variant-solid">
+          <div class="glass-panel-label">Nav / Tab Bar</div>
+          <div class="glass-panel-title">Solid Glass</div>
+          <div class="glass-panel-sub">.glass-nav &middot; 72% tint</div>
+        </div>
+
+        <!-- SVG Refraction: physics-based distortion (Chrome only) -->
+        <div class="glass-panel glass-variant-refract" id="refract-panel">
+          <div class="glass-panel-label">SVG Refraction</div>
+          <div class="glass-panel-title">Snell's Law</div>
+          <div class="glass-panel-sub">feDisplacementMap &middot; n=1.5</div>
+          <div class="glass-panel-badge">Chrome only</div>
+        </div>
+
+      </div>
+
+      <!-- Physics explanation -->
+      <div style="padding: var(--space-4); margin-top: var(--space-2);">
+        <details style="font-size: 13px; color: var(--label-secondary); line-height: 1.6;">
+          <summary style="font-weight: 600; color: var(--label-primary); cursor: pointer; margin-bottom: var(--space-2);">Wie funktioniert Liquid Glass? (Physik)</summary>
+          <p style="margin-bottom: var(--space-2);">
+            <strong>Snell's Law:</strong> n&sub1;&middot;sin(&theta;&sub1;) = n&sub2;&middot;sin(&theta;&sub2;) &mdash; Brechungsindex Luft=1, Glas=1.5
+          </p>
+          <p style="margin-bottom: var(--space-2);">
+            <strong>Oberflächenprofil:</strong> Apple nutzt die Squircle-Kurve y = &nbsp;<sup>4</sup>&radic;(1 &minus; (1&minus;x)&sup4;) für weiche Kantenübergänge statt harter Kugel.
+          </p>
+          <p style="margin-bottom: var(--space-2);">
+            <strong>3 Ebenen:</strong> 1) CSS-only (blur + inset shadows) &mdash; alle Browser. 2) SVG feDisplacementMap für echte Lichtbrechung &mdash; nur Chrome. 3) WebGL Shader für vollständige Physik &mdash; GPU-intensive.
+          </p>
+          <p style="font-family: var(--font-mono); font-size: 11px; background: var(--fill-tertiary); padding: var(--space-2); border-radius: var(--radius-md);">
+            Displacement-Vektor &rarr; RGB: r = 128 + x&middot;127, g = 128 + y&middot;127 &mdash; 128 = neutral (keine Verschiebung)
+          </p>
+          <p style="margin-top: var(--space-2); font-size: 11px;">
+            Quelle: <a href="https://kube.io/blog/liquid-glass-css-svg/" style="color: var(--system-blue);">kube.io/blog/liquid-glass-css-svg</a>
+          </p>
+        </details>
+      </div>
+    </div>
+
+    <!-- Shadows -->
+    <div class="section">
+      <h2 class="section-title">Schatten</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-4); padding: var(--space-4);">
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-xs);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">XS</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-xs</div>
+        </div>
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">SM</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-sm</div>
+        </div>
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-md);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">MD</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-md</div>
+        </div>
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-lg);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">LG</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-lg</div>
+        </div>
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-xl);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">XL</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-xl</div>
+        </div>
+        <div style="background: var(--bg-grouped-secondary); padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-2xl);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--label-primary);">2XL</div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: var(--label-secondary);">--shadow-2xl</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Border Radius -->
+    <div class="section">
+      <h2 class="section-title">Border Radius</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); padding: var(--space-4); align-items: end;">
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--system-blue); border-radius: var(--radius-sm);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">sm (4px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--system-green); border-radius: var(--radius-md);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">md (8px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--system-orange); border-radius: var(--radius-lg);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">lg (12px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 56px; height: 56px; background: var(--system-purple); border-radius: var(--radius-xl);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">xl (16px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 64px; height: 64px; background: var(--system-pink); border-radius: var(--radius-2xl);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">2xl (20px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 72px; height: 72px; background: var(--system-teal); border-radius: var(--radius-3xl);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">3xl (24px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--system-red); border-radius: var(--radius-full);"></div>
+          <div style="font-size: 11px; color: var(--label-secondary); margin-top: var(--space-1);">full</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SVG filter for refraction displacement (hidden, referenced by CSS) -->
+  <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+    <defs>
+      <filter id="liquid-glass-filter" color-interpolation-filters="sRGB">
+        <feImage id="lg-displacement-image" x="0" y="0" width="200" height="200" result="displacement_map" />
+        <feDisplacementMap in="SourceGraphic" in2="displacement_map" scale="12" xChannelSelector="R" yChannelSelector="G" result="refracted" />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blurred" />
+        <feBlend in="refracted" in2="blurred" mode="normal" result="glass_base" />
+        <feSpecularLighting in="displacement_map" surfaceScale="3" specularConstant="0.6" specularExponent="25" result="specular">
+          <fePointLight x="100" y="30" z="120" />
+        </feSpecularLighting>
+        <feComposite in="specular" in2="SourceGraphic" operator="in" result="specular_masked" />
+        <feBlend in="glass_base" in2="specular_masked" mode="screen" />
+      </filter>
+    </defs>
+  </svg>
+
+  <script>
+    /**
+     * Liquid Glass Displacement Map Generator
+     * Based on Snell's Law (n=1.5) with squircle surface profile.
+     * Reference: kube.io/blog/liquid-glass-css-svg/
+     */
+    function generateDisplacementMap(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.createImageData(size, size);
+      const data = imageData.data;
+      const center = size / 2;
+      const radius = size / 2;
+      const n = 1.5; // glass refractive index
+
+      // Squircle surface: y = (1 - (1-x)^4)^(1/4) — Apple's preferred curve
+      function squircle(t) {
+        const clamped = Math.max(0, Math.min(1, t));
+        return Math.pow(1 - Math.pow(1 - clamped, 4), 0.25);
+      }
+
+      for (let py = 0; py < size; py++) {
+        for (let px = 0; px < size; px++) {
+          const dx = (px - center) / radius;
+          const dy = (py - center) / radius;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const idx = (py * size + px) * 4;
+
+          if (dist >= 1.0) {
+            // Outside glass: no displacement
+            data[idx]     = 128;
+            data[idx + 1] = 128;
+            data[idx + 2] = 128;
+            data[idx + 3] = 255;
+            continue;
+          }
+
+          // Distance from edge (0 at edge, 1 at center)
+          const distFromEdge = 1 - dist;
+          const height = squircle(distFromEdge);
+
+          // Surface normal via finite difference
+          const delta = 0.001;
+          const h1 = squircle(distFromEdge - delta);
+          const h2 = squircle(distFromEdge + delta);
+          const derivative = (h2 - h1) / (2 * delta);
+
+          // Angle of incidence from surface normal
+          const normalMag = Math.sqrt(derivative * derivative + 1);
+          const sinTheta1 = Math.abs(derivative) / normalMag;
+
+          // Snell's Law: sin(theta2) = sin(theta1) / n
+          const sinTheta2 = sinTheta1 / n;
+          const displacement = (sinTheta1 - sinTheta2) * height * 0.8;
+
+          // Direction: radial from center
+          const angle = Math.atan2(dy, dx);
+          const displaceX = Math.cos(angle) * displacement;
+          const displaceY = Math.sin(angle) * displacement;
+
+          // Encode as RGB (128 = neutral, range mapped to 0-255)
+          data[idx]     = Math.round(128 + displaceX * 127);
+          data[idx + 1] = Math.round(128 + displaceY * 127);
+          data[idx + 2] = 128;
+          data[idx + 3] = 255;
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      return canvas.toDataURL();
+    }
+
+    // Apply displacement map to SVG filter and enable refraction panel
+    function initRefraction() {
+      const panel = document.getElementById('refract-panel');
+      if (!panel) return;
+
+      const mapUrl = generateDisplacementMap(200);
+      const feImage = document.getElementById('lg-displacement-image');
+      if (feImage) {
+        feImage.setAttribute('href', mapUrl);
+      }
+
+      // Apply SVG filter as backdrop-filter (Chrome only)
+      panel.style.backdropFilter = 'url(#liquid-glass-filter) blur(12px) saturate(180%)';
+      panel.style.webkitBackdropFilter = 'url(#liquid-glass-filter) blur(12px) saturate(180%)';
+
+      // Fallback: if backdrop-filter with SVG doesn't work, use standard blur
+      requestAnimationFrame(() => {
+        const computed = getComputedStyle(panel).backdropFilter;
+        if (!computed || computed === 'none') {
+          panel.style.backdropFilter = 'blur(20px) saturate(180%)';
+          panel.style.webkitBackdropFilter = 'blur(20px) saturate(180%)';
+          // Update badge to indicate fallback
+          const badge = panel.querySelector('.glass-panel-badge');
+          if (badge) badge.textContent = 'Fallback (blur only)';
+        }
+      });
+    }
+
+    initRefraction();
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+        html.style.colorScheme = 'light';
+        document.getElementById('theme-icon').textContent = '\u263D';
+        document.getElementById('theme-label').textContent = 'Dark';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        html.style.colorScheme = 'dark';
+        document.getElementById('theme-icon').textContent = '\u2600';
+        document.getElementById('theme-label').textContent = 'Light';
+      }
+    }
+  </script>
+</body>
+</html>

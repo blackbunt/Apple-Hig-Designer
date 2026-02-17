@@ -52,13 +52,15 @@ Vercle: https://fashion-editorial.vercel.app/
 
 ## 🎯 Overview
 
-This apple-hig-designer enables you to design professional web and mobile interfaces that follow Apple's Human Interface Guidelines. It provides comprehensive knowledge about:
+This apple-hig-designer enables you to design professional web and mobile interfaces that follow Apple's Human Interface Guidelines. All specifications are verified against Apple HIG, iOS UIKit, and WWDC 2023-2025 sessions. It provides comprehensive knowledge about:
 
-- **SF Pro Typography** system
-- **Apple System Colors** with light/dark mode support
-- **8pt Grid Spacing System**
-- **Component Patterns** (buttons, cards, inputs, etc.)
-- **Animation Guidelines** with Apple-standard easing curves
+- **SF Pro Typography** system with verified leading/tracking values
+- **Apple System Colors** -- all 12 colors with light/dark/high-contrast variants
+- **8pt Grid Spacing System** with platform-specific margins
+- **18+ Component Patterns** with exact dimensions (buttons, cards, lists, tabs, sheets, alerts, search, toggle, segmented control, slider, sidebar, popover, and more)
+- **Spring Animations** with CSS linear() approximation (WWDC 2023+)
+- **Liquid Glass** (iOS 26 / WWDC 2025) web approximation utilities
+- **Platform Adaptations** for iOS, macOS, iPadOS, and visionOS
 
 ## 📦 Installation
 
@@ -107,15 +109,25 @@ Example
 
 ```
 apple-hig-designer/
-├── Skill.md              # Main skill definition
-├── REFERENCE.md          # Detailed HIG reference documentation
-├── README.md             # English documentation
-├── README_CN.md          # Chinese documentation
-├── LICENSE               # MIT License
-└── resources/
-    ├── components.jsx    # React component examples
-    ├── design-tokens.css # CSS custom properties
-    └── ui-patterns.md    # UI pattern documentation
+├── SKILL.md                         # Main skill definition (~1900 words, v3.0)
+├── references/
+│   ├── design-tokens.css            # Complete CSS custom properties with full type
+│   │                                  scale, all colors, spring animation, Liquid Glass
+│   ├── design-patterns.md           # 18+ component patterns with full HTML/CSS,
+│   │                                  page layouts, platform adaptations
+│   ├── tailwind.config.js           # Tailwind v3 config mapping all design tokens
+│   │                                  with apple- prefix (colors, type, spacing, etc.)
+│   └── tailwind-mapping.md          # Quick-reference: HIG token → CSS var → Tailwind
+│                                      class, plus common pattern recipes
+├── examples/
+│   ├── components.jsx               # 16 production-ready React components (inline styles)
+│   ├── components-tailwind.jsx      # 16 React components rewritten with Tailwind classes
+│   └── ui-patterns.md               # 7 complete page examples (login, dashboard,
+│                                      settings, products, search, pricing, chat)
+├── screenshots/                     # Demo screenshots
+├── README.md                        # English documentation
+├── README_CN.md                     # Chinese documentation
+└── LICENSE                          # MIT License
 ```
 
 
@@ -126,13 +138,15 @@ apple-hig-designer/
 
 | Feature | Description |
 |---------|-------------|
-| **Typography** | SF Pro font system with proper size thresholds |
-| **Colors** | Complete Apple system color palette |
-| **Spacing** | 8pt grid system implementation |
-| **Components** | Buttons, cards, inputs, glass panels |
-| **Animations** | Apple-standard cubic-bezier easing |
-| **Accessibility** | WCAG AA compliant, reduced motion support |
-| **Dark Mode** | Full light/dark mode support |
+| **Typography** | Full iOS type scale with verified leading/tracking values |
+| **Colors** | All 12 system colors + grays, fills, labels, backgrounds with dark & high-contrast variants |
+| **Spacing** | 8pt grid system with platform-specific margins and touch targets |
+| **Components** | 18+ components: buttons, cards, lists, tabs, sheets, alerts, search, toggle, segmented control, slider, sidebar, popover, progress, badges |
+| **Animations** | Spring physics via linear() (WWDC 2023+), Apple easing curves, duration scale |
+| **Liquid Glass** | iOS 26 / WWDC 2025 translucent material utilities for web |
+| **Accessibility** | WCAG AA, prefers-reduced-motion, prefers-contrast: high, semantic HTML |
+| **Dark Mode** | Full light/dark mode with automatic switching |
+| **Platform** | iOS, macOS, iPadOS, and visionOS adaptations |
 
 ## 📚 Resources
 

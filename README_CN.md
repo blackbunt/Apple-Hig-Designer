@@ -43,13 +43,15 @@ Vercle：https://fashion-editorial.vercel.app/
 
 ## 🎯 概述
 
-这是一个 Claude Code Skill，用于创建符合 Apple 人机界面指南的专业界面设计。包含以下知识：
+这是一个 Claude Code Skill，用于创建符合 Apple 人机界面指南的专业界面设计。所有规范均经过 Apple HIG、iOS UIKit 和 WWDC 2023-2025 验证。包含以下知识：
 
-- **SF Pro 字体系统**
-- **Apple 系统色彩** (支持亮色/暗色模式)
-- **8pt 网格间距系统**
-- **组件模式** (按钮、卡片、输入框等)
-- **动画指南** (Apple 标准缓动曲线)
+- **SF Pro 字体系统** -- 完整的 iOS 字体比例，包含行高和字间距
+- **Apple 系统色彩** -- 全部 12 种颜色，支持亮色/暗色/高对比度模式
+- **8pt 网格间距系统** -- 平台特定的边距和触摸目标
+- **18+ 组件模式** -- 按钮、卡片、列表、标签栏、底部弹窗、提示框、搜索栏、开关、分段控制、滑块、侧边栏、弹出框等
+- **弹簧动画** -- 通过 CSS linear() 近似实现（WWDC 2023+）
+- **Liquid Glass** -- iOS 26 / WWDC 2025 半透明材质效果的 Web 近似实现
+- **平台适配** -- iOS、macOS、iPadOS 和 visionOS
 
 ## 📦 安装方法
 
@@ -95,15 +97,25 @@ cp -r apple-hig-designer .claude/skills/
 
 ```
 apple-hig-designer/
-├── Skill.md              # 主技能定义文件
-├── REFERENCE.md          # 详细 HIG 参考文档
-├── README.md             # 英文文档
-├── README_CN.md          # 中文文档
-├── LICENSE               # MIT 许可证
-└── resources/
-    ├── components.jsx    # React 组件示例
-    ├── design-tokens.css # CSS 自定义属性
-    └── ui-patterns.md    # UI 模式文档
+├── SKILL.md                         # 主技能定义文件（约1900词，v3.0）
+├── references/
+│   ├── design-tokens.css            # 完整 CSS 自定义属性：字体比例、所有颜色、
+│   │                                  弹簧动画、Liquid Glass
+│   ├── design-patterns.md           # 18+ 组件模式，包含完整 HTML/CSS、
+│   │                                  页面布局、平台适配
+│   ├── tailwind.config.js           # Tailwind v3 配置，映射所有设计令牌，
+│   │                                  使用 apple- 前缀（颜色、字体、间距等）
+│   └── tailwind-mapping.md          # 快速参考：HIG 令牌 → CSS 变量 → Tailwind
+│                                      类名，以及常用模式配方
+├── examples/
+│   ├── components.jsx               # 16 个生产级 React 组件（内联样式）
+│   ├── components-tailwind.jsx      # 16 个 React 组件（Tailwind 类名版本）
+│   └── ui-patterns.md               # 7 个完整页面示例（登录、仪表盘、
+│                                      设置、产品、搜索、定价、聊天）
+├── screenshots/                     # 演示截图
+├── README.md                        # 英文文档
+├── README_CN.md                     # 中文文档
+└── LICENSE                          # MIT 许可证
 ```
 
 
@@ -112,13 +124,15 @@ apple-hig-designer/
 
 | 功能 | 描述 |
 |------|------|
-| **字体排版** | SF Pro 字体系统，正确的尺寸阈值 |
-| **色彩系统** | 完整的 Apple 系统色彩调色板 |
-| **间距系统** | 8pt 网格系统实现 |
-| **组件库** | 按钮、卡片、输入框、毛玻璃面板 |
-| **动画效果** | Apple 标准三次贝塞尔缓动 |
-| **无障碍** | WCAG AA 合规，减少动效支持 |
-| **深色模式** | 完整的亮色/暗色模式支持 |
+| **字体排版** | 完整 iOS 字体比例，包含验证过的行高和字间距 |
+| **色彩系统** | 全部 12 种系统色 + 灰度、填充、标签、背景色，支持深色和高对比度模式 |
+| **间距系统** | 8pt 网格系统，平台特定边距和触摸目标 |
+| **组件库** | 18+ 组件：按钮、卡片、列表、标签栏、弹窗、提示框、搜索、开关、分段控制、滑块、侧边栏、弹出框、进度条、徽章 |
+| **动画效果** | 弹簧物理通过 linear()（WWDC 2023+），Apple 缓动曲线，时间刻度 |
+| **Liquid Glass** | iOS 26 / WWDC 2025 半透明材质 Web 工具类 |
+| **无障碍** | WCAG AA、prefers-reduced-motion、prefers-contrast: high、语义化 HTML |
+| **深色模式** | 完整亮色/暗色自动切换 |
+| **平台适配** | iOS、macOS、iPadOS 和 visionOS 适配 |
 
 ## 📚 参考资源
 

@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Komponenten - Apple HIG Design Tokens</title>
+  <link rel="stylesheet" href="../references/design-tokens.css">
+  <style>
+    body {
+      background: var(--bg-grouped-primary);
+      padding-bottom: var(--space-16);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(29, 29, 31, 0.72);
+    }
+
+    .topbar-back {
+      font-size: 17px;
+      color: var(--system-blue);
+      text-decoration: none;
+    }
+
+    .topbar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 14px;
+      background: var(--fill-tertiary);
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--label-primary);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .section { margin-bottom: var(--space-8); }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--label-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-card {
+      background: var(--bg-grouped-secondary);
+      border-radius: 10px;
+      padding: var(--space-6);
+    }
+
+    .component-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .component-row:last-child { margin-bottom: 0; }
+
+    .divider {
+      height: 1px;
+      background: var(--separator);
+      margin: var(--space-6) 0;
+    }
+
+    /* ==================== BUTTONS — iOS 26 ==================== */
+    /* Scale-up on press (from ionic-theme-ios26 ion-button.scss):
+       Small: 1.12 (icon-only: 1.18), Default: 1.25 (icon-only: 1.32), Large: 1.12 (icon-only: 1.22)
+       Hover: opacity 0.72. Activated: text fades to 10%. transition: 140ms ease-out */
+
+    /* Solid fill — submit-style button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+      background: var(--system-blue);
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: transform var(--duration-activated, 140ms) ease-out,
+                  opacity var(--duration-activated, 140ms) ease-out;
+    }
+    .btn-primary:hover { opacity: 0.72; }
+    .btn-primary:active {
+      transform: scale(1.25) translateZ(0);
+      box-shadow:
+        inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+        0 0 8px -4px rgba(var(--glass-shadow-rgb), 0.92);
+    }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-primary:focus-visible { box-shadow: var(--shadow-focus); }
+
+    /* Default fill — glass background (iOS 26 default button style) */
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--label-primary);
+      background: rgba(var(--glass-bg-rgb), var(--glass-opacity, 0.72));
+      backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+      -webkit-backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+      box-shadow:
+        inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+        0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+      border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+      border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+      border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+      border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+      border-radius: 24px;
+      cursor: pointer;
+      transition: transform var(--duration-activated, 140ms) ease-out,
+                  color 50ms ease;
+      transform: translateZ(0);
+    }
+    .btn-glass:hover { opacity: 0.72; }
+    .btn-glass:active {
+      transform: scale(1.25) translateZ(0);
+      color: rgba(var(--glass-bg-rgb), 0.1);
+      box-shadow:
+        inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+        0 0 8px -4px rgba(var(--glass-shadow-rgb), 0.92);
+    }
+
+    /* Dark mode: glass button activation uses inverted colors */
+    [data-theme="dark"] .btn-glass:active {
+      background: rgba(var(--glass-selected-rgb), 0.56);
+      backdrop-filter: blur(7px) saturate(180%);
+      color: rgba(var(--glass-selected-rgb), 1);
+      box-shadow: inset 0 0 16px 0 rgba(var(--glass-shadow-rgb), 0.55);
+      border-top: 0.8px solid rgba(var(--glass-selected-rgb), 0.8);
+      border-right: 0.8px solid rgba(var(--glass-selected-rgb), 0.4);
+      border-bottom: 0.8px solid rgba(var(--glass-selected-rgb), 0.8);
+      border-left: 0.8px solid rgba(var(--glass-selected-rgb), 0.6);
+    }
+
+    /* Tinted — iOS secondary style */
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--system-blue);
+      background: rgba(0, 122, 255, 0.1);
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: transform var(--duration-activated, 140ms) ease-out;
+    }
+    .btn-secondary:hover { opacity: 0.72; }
+    .btn-secondary:active { transform: scale(1.25) translateZ(0); }
+
+    /* Gray — fill-tertiary background */
+    .btn-gray {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      background: var(--fill-tertiary);
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: transform var(--duration-activated, 140ms) ease-out;
+    }
+    .btn-gray:hover { opacity: 0.72; }
+    .btn-gray:active { transform: scale(1.25) translateZ(0); }
+
+    /* Destructive — red solid */
+    .btn-destructive {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+      background: var(--system-red);
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: transform var(--duration-activated, 140ms) ease-out;
+    }
+    .btn-destructive:hover { opacity: 0.72; }
+    .btn-destructive:active { transform: scale(1.25) translateZ(0); }
+
+    /* Text / Clear — no background, text only */
+    .btn-text {
+      display: inline-flex;
+      align-items: center;
+      font-size: 17px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--system-blue);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2) var(--space-3);
+      transition: transform var(--duration-activated, 140ms) ease-out,
+                  color 50ms ease;
+    }
+    .btn-text:active {
+      color: rgba(0, 122, 255, 0.1);
+    }
+
+    .btn-sm { min-height: 32px; padding: 8px 16px; font-size: 14px; }
+    .btn-sm:active { transform: scale(1.12) translateZ(0); }
+    .btn-lg { min-height: 56px; padding: 16px 32px; font-size: 19px; border-radius: 30px; }
+    .btn-lg:active { transform: scale(1.12) translateZ(0); }
+
+    /* ==================== TOGGLE / SWITCH — iOS 26 ==================== */
+    /* Source: rdlabo-team/ionic-theme-ios26
+       Track: 64×28px, Handle: 38×24px, Glass activation on press */
+    .toggle {
+      position: relative;
+      width: var(--toggle-width, 64px);
+      height: var(--toggle-height, 28px);
+      cursor: pointer;
+      display: inline-block;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+
+    /* Track */
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--toggle-track-off, rgba(0, 0, 0, 0.23));
+      border-radius: 28px;
+      transition: background 280ms ease, transform 280ms ease;
+      overflow: visible;
+    }
+
+    /* Handle (knob) */
+    .toggle-track::before {
+      content: '';
+      position: absolute;
+      width: var(--toggle-handle-width, 38px);
+      height: var(--toggle-handle-height, 24px);
+      left: 2px;
+      top: 2px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: var(--shadow-toggle-knob);
+      transition:
+        transform 280ms ease,
+        width 120ms ease-in-out 80ms,
+        box-shadow 200ms ease,
+        background-color 250ms ease,
+        backdrop-filter 250ms ease;
+      transform-origin: center;
+    }
+
+    /* Checked: green track + handle slides right */
+    .toggle input:checked + .toggle-track { background: var(--system-green); }
+    .toggle input:checked + .toggle-track::before {
+      transform: translateX(calc(var(--toggle-width, 64px) - var(--toggle-handle-width, 38px) - 4px));
+    }
+
+    /* ---- ACTIVATED (pressed): Liquid Glass handle ---- */
+    .toggle input:active + .toggle-track::before,
+    .toggle.activated .toggle-track::before {
+      transform: scale(1.4, 1.6) translateZ(0);
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.1);
+      backdrop-filter: blur(0.5px) saturate(120%);
+      -webkit-backdrop-filter: blur(0.5px) saturate(120%);
+      box-shadow: inset 0 0 8px 0 var(--toggle-track-off, rgba(0, 0, 0, 0.23));
+    }
+
+    /* Checked + Activated: color-bleed inset shadows */
+    .toggle input:checked:active + .toggle-track::before,
+    .toggle.activated input:checked + .toggle-track::before {
+      transform: scale(1.4, 1.6) translateZ(0);
+      box-shadow:
+        inset 0 8px 8px -8px var(--system-green),
+        inset 8px 0 8px -8px var(--toggle-track-off, rgba(0, 0, 0, 0.23)),
+        inset -8px 0 8px -8px var(--system-green);
+    }
+
+    /* Unchecked + Activated: slight shift left to show expansion */
+    .toggle input:not(:checked):active + .toggle-track::before,
+    .toggle.activated input:not(:checked) + .toggle-track::before {
+      transform: translateX(-4px) scale(1.4, 1.6) translateZ(0);
+    }
+
+    /* Activated: track squish (inside list items) */
+    .toggle input:checked:active + .toggle-track,
+    .toggle.activated input:checked + .toggle-track {
+      transform-origin: left;
+      transform: scaleX(0.894) translateZ(0);
+    }
+
+    /* Custom colors: inherit track color on handle's inset shadow */
+    .toggle[data-color] input:checked:active + .toggle-track::before {
+      box-shadow:
+        inset 0 8px 8px -8px var(--toggle-color, var(--system-green)),
+        inset 8px 0 8px -8px var(--toggle-track-off, rgba(0, 0, 0, 0.23)),
+        inset -8px 0 8px -8px var(--toggle-color, var(--system-green));
+    }
+
+    /* Disabled */
+    .toggle.toggle-disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ---- Dark Mode ---- */
+    [data-theme="dark"] .toggle-track::before {
+      /* Handle stays white in dark mode — NOT gray */
+      background: white;
+    }
+    [data-theme="dark"] .toggle input:active + .toggle-track::before,
+    [data-theme="dark"] .toggle.activated .toggle-track::before {
+      background: rgba(var(--glass-bg-rgb, 62, 62, 62), 0.1);
+    }
+
+    /* ==================== INPUT ==================== */
+    .input-field {
+      width: 100%;
+      min-height: 44px;
+      padding: 12px 16px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      color: var(--label-primary);
+      background: var(--bg-secondary);
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: border-color var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+    .input-field:focus {
+      border-color: var(--system-blue);
+      box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+    }
+    .input-field::placeholder { color: var(--label-tertiary); }
+    .input-field.error {
+      border-color: var(--system-red);
+      box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .form-error {
+      font-size: 13px;
+      color: var(--system-red);
+      margin-top: var(--space-1);
+    }
+
+    /* ==================== SEARCH BAR ==================== */
+    .search-container {
+      position: relative;
+      max-width: 400px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--label-tertiary);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 12px 0 36px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      color: var(--label-primary);
+      background: var(--fill-tertiary);
+      border: none;
+      border-radius: 10px;
+      outline: none;
+    }
+    .search-input::placeholder { color: var(--label-tertiary); }
+    .search-input:focus {
+      box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+    }
+
+    /* ==================== SEGMENTED CONTROL ==================== */
+    /* ==================== SEGMENTED CONTROL — iOS 26 ==================== */
+    /* Full glass background, scale(1.1) on activation, 25px radius */
+    .segmented-control {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      background: rgba(var(--glass-bg-rgb), var(--glass-opacity, 0.72));
+      backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+      -webkit-backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+      box-shadow:
+        inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+        0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+      border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+      border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+      border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+      border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+      border-radius: 25px;
+      padding: 3px 2px;
+      transition: transform var(--duration-activated, 140ms) ease-out;
+    }
+    .segmented-control:active,
+    .segmented-control:has(.segment:active) {
+      transform: scale(1.1) translateZ(0);
+    }
+    .segment {
+      min-width: 60px;
+      padding: 0 8px;
+      min-height: 42px;
+      font-family: var(--font-system);
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--label-primary);
+      background: transparent;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 0 2px;
+      transition: background 200ms ease, transform 100ms ease-out;
+    }
+    .segment.active {
+      background: rgba(var(--glass-bg-rgb), 0.06);
+    }
+    .segment.active:active {
+      transform: scale(1.08) translateZ(0);
+    }
+
+    /* ==================== SLIDER ==================== */
+    /* ==================== SLIDER ==================== */
+    .slider-container {
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .slider-icon {
+      font-size: 16px;
+      color: var(--label-secondary);
+      flex-shrink: 0;
+    }
+
+    .slider-icon-lg { font-size: 22px; }
+
+    .slider-value {
+      min-width: 36px;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--label-primary);
+      flex-shrink: 0;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+      background: var(--fill-tertiary);
+      cursor: pointer;
+    }
+
+    /* Filled track via linear-gradient (set via JS or inline style) */
+    .slider-filled {
+      background: linear-gradient(
+        to right,
+        var(--system-blue) 0%,
+        var(--system-blue) var(--slider-progress, 50%),
+        var(--fill-tertiary) var(--slider-progress, 50%),
+        var(--fill-tertiary) 100%
+      );
+    }
+
+    /* Webkit Thumb — iOS 26 glass knob */
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 24px;
+      border: 0.5px solid rgba(0, 0, 0, 0.04);
+      box-shadow:
+        0 0.5px 1px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      transition: transform var(--toggle-activated-duration, 280ms) cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .slider:active::-webkit-slider-thumb {
+      transform: scale(1.4, 1.6);
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.1);
+      backdrop-filter: blur(0.5px) saturate(120%);
+      -webkit-backdrop-filter: blur(0.5px) saturate(120%);
+      border: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.8);
+      box-shadow:
+        inset 0 2px 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.3),
+        inset 0 -2px 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.15),
+        inset 2px 0 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        inset -2px 0 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        0 0 10px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.2);
+    }
+
+    /* Firefox Track + Thumb */
+    .slider::-moz-range-track {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--fill-tertiary);
+      border: none;
+    }
+
+    .slider.slider-filled::-moz-range-progress {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--system-blue);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 24px;
+      border: 0.5px solid rgba(0, 0, 0, 0.04);
+      box-shadow:
+        0 0.5px 1px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      transition: transform var(--toggle-activated-duration, 280ms) cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .slider:active::-moz-range-thumb {
+      transform: scale(1.4, 1.6);
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.1);
+      border: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.8);
+      box-shadow:
+        inset 0 2px 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.3),
+        inset 0 -2px 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.15),
+        inset 2px 0 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        inset -2px 0 4px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        0 0 10px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.2);
+    }
+
+    /* Dark mode thumb — stays white, NOT gray (iOS 26 principle) */
+    [data-theme="dark"] .slider::-webkit-slider-thumb {
+      background: white;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .slider::-moz-range-thumb {
+      background: white;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    /* Dark mode glass activation — inverted colors */
+    [data-theme="dark"] .slider:active::-webkit-slider-thumb {
+      background: rgba(var(--glass-bg-rgb), 0.1);
+      border-color: rgba(var(--glass-border-rgb), 0.8);
+      box-shadow:
+        inset 0 2px 4px rgba(var(--glass-shadow-rgb), 0.3),
+        inset 0 -2px 4px rgba(var(--glass-shadow-rgb), 0.15),
+        inset 2px 0 4px rgba(var(--glass-shadow-rgb), 0.1),
+        inset -2px 0 4px rgba(var(--glass-shadow-rgb), 0.1),
+        0 0 10px rgba(var(--glass-shadow-rgb), 0.2);
+    }
+    [data-theme="dark"] .slider:active::-moz-range-thumb {
+      background: rgba(var(--glass-bg-rgb), 0.1);
+      border-color: rgba(var(--glass-border-rgb), 0.8);
+      box-shadow:
+        inset 0 2px 4px rgba(var(--glass-shadow-rgb), 0.3),
+        inset 0 -2px 4px rgba(var(--glass-shadow-rgb), 0.15),
+        inset 2px 0 4px rgba(var(--glass-shadow-rgb), 0.1),
+        inset -2px 0 4px rgba(var(--glass-shadow-rgb), 0.1),
+        0 0 10px rgba(var(--glass-shadow-rgb), 0.2);
+    }
+
+    /* Color variant */
+    .slider-green { --slider-color: var(--system-green); }
+    .slider-orange { --slider-color: var(--system-orange); }
+    .slider-green.slider-filled {
+      background: linear-gradient(to right,
+        var(--system-green) 0%, var(--system-green) var(--slider-progress, 50%),
+        var(--fill-tertiary) var(--slider-progress, 50%), var(--fill-tertiary) 100%);
+    }
+    .slider-orange.slider-filled {
+      background: linear-gradient(to right,
+        var(--system-orange) 0%, var(--system-orange) var(--slider-progress, 50%),
+        var(--fill-tertiary) var(--slider-progress, 50%), var(--fill-tertiary) 100%);
+    }
+    .slider-green::-moz-range-progress { background: var(--system-green); }
+    .slider-orange::-moz-range-progress { background: var(--system-orange); }
+
+    /* Stepped slider tick marks */
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 13px; /* half thumb width minus 1px */
+      margin-top: 6px;
+    }
+    .slider-tick {
+      font-size: 11px;
+      color: var(--label-tertiary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Disabled state */
+    .slider:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ==================== LIQUID GLASS SLIDER (kube.io) ==================== */
+    /* Matches kube.io structure exactly:
+       Container (relative, 330×60) → Track (absolute, 330×14) → Clip → Fill
+                                     → Thumb (absolute, 90×60, scale 0.6) */
+    .lg-slider {
+      position: relative;
+      width: 330px;
+      height: 60px;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: pan-y;
+    }
+
+    .lg-slider-track {
+      display: inline-block;
+      width: 330px;
+      height: 14px;
+      left: 0;
+      top: 23px;
+      background-color: #89898F66;
+      border-radius: 7px;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    .lg-slider-clip {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 9999px;
+    }
+
+    .lg-slider-fill {
+      height: 14px;
+      border-radius: 6px;
+      background-color: #0377F7;
+      pointer-events: none;
+    }
+
+    .lg-slider-thumb {
+      position: absolute;
+      top: 0;
+      height: 60px;
+      width: 90px;
+      border-radius: 30px;
+      cursor: pointer;
+      /* kube.io: rgba(255,255,255,1) default — solid white */
+      background-color: rgba(255, 255, 255, 1);
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+      transform: scale(0.6);
+      transform-origin: center;
+      transition:
+        transform 200ms var(--ease-out),
+        box-shadow 200ms var(--ease-out),
+        background-color 250ms var(--ease-out);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Active: glass — bg drops to near-zero so backdrop-filter refraction shows */
+    .lg-slider-thumb.active {
+      transform: scale(0.65);
+      background-color: rgba(255, 255, 255, 0.10);
+      box-shadow:
+        inset 1.5px 1.5px 1px rgba(255, 255, 255, 0.6),
+        inset -1px -1px 0.5px rgba(255, 255, 255, 0.35),
+        0 4px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Fallback active (non-Chrome): blur instead of SVG refraction */
+    .lg-slider-thumb.fallback.active {
+      background-color: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    [data-theme="dark"] .lg-slider-track {
+      background-color: #89898F40;
+    }
+    /* iOS 26: thumb stays WHITE in dark mode — never gray */
+    [data-theme="dark"] .lg-slider-thumb {
+      background-color: rgba(255, 255, 255, 1);
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="dark"] .lg-slider-thumb.active {
+      background-color: rgba(var(--glass-bg-rgb, 62, 62, 62), 0.1);
+      box-shadow:
+        inset 1.5px 1.5px 1px rgba(var(--glass-border-rgb, 68, 68, 68), 0.6),
+        inset -1px -1px 0.5px rgba(var(--glass-border-rgb, 68, 68, 68), 0.35),
+        0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+    [data-theme="dark"] .lg-slider-thumb.fallback.active {
+      background-color: rgba(var(--glass-bg-rgb, 62, 62, 62), 0.25);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    /* Demo container — colorful background so refraction is visible */
+    .lg-demo-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-8);
+      min-height: 360px;
+      padding: var(--space-8) var(--space-6);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      contain: layout style paint;
+      --bg1: #f0f4ff;
+      --bg2: #e0eef5;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(0, 122, 255, 0.15), transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(175, 82, 222, 0.12), transparent 60%),
+        radial-gradient(ellipse at 50% 90%, rgba(255, 149, 0, 0.1), transparent 50%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    [data-theme="dark"] .lg-demo-container {
+      --bg1: #1b1b22;
+      --bg2: #0f0f14;
+      border-color: rgba(255, 255, 255, 0.1);
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(0, 122, 255, 0.12), transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(175, 82, 222, 0.1), transparent 60%),
+        radial-gradient(ellipse at 50% 90%, rgba(255, 149, 0, 0.08), transparent 50%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    /* Background pattern for extra visual texture */
+    .lg-demo-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 40px,
+          rgba(0, 0, 0, 0.02) 40px,
+          rgba(0, 0, 0, 0.02) 41px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 40px,
+          rgba(0, 0, 0, 0.02) 40px,
+          rgba(0, 0, 0, 0.02) 41px
+        );
+      pointer-events: none;
+    }
+
+    [data-theme="dark"] .lg-demo-container::before {
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 40px,
+          rgba(255, 255, 255, 0.02) 40px,
+          rgba(255, 255, 255, 0.02) 41px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 40px,
+          rgba(255, 255, 255, 0.02) 40px,
+          rgba(255, 255, 255, 0.02) 41px
+        );
+    }
+
+    .lg-slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 330px;
+    }
+
+    .lg-slider-label .component-label {
+      color: var(--label-primary);
+    }
+
+    .lg-slider-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--label-tertiary);
+      background: var(--fill-quaternary);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ==================== BADGES ==================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+    }
+    .badge-success { color: var(--system-green); background: rgba(52, 199, 89, 0.12); }
+    .badge-warning { color: var(--system-orange); background: rgba(255, 149, 0, 0.12); }
+    .badge-error { color: var(--system-red); background: rgba(255, 59, 48, 0.12); }
+    .badge-info { color: var(--system-blue); background: rgba(0, 122, 255, 0.12); }
+    .badge-purple { color: var(--system-purple); background: rgba(175, 82, 222, 0.12); }
+
+    .notification-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--system-red);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      background: var(--system-red);
+      border-radius: 10px;
+    }
+
+    /* ==================== CARDS ==================== */
+    .card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      transition: transform var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .card-elevated {
+      box-shadow: var(--shadow-md);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      border: none;
+      box-shadow:
+        inset 1.5px 1.5px 1px rgba(255, 255, 255, 0.6),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.35),
+        0 6px 12px rgba(0, 0, 0, 0.12),
+        0 0 20px rgba(0, 0, 0, 0.06);
+    }
+    .card-glass .component-label,
+    .card-glass p {
+      color: rgba(255, 255, 255, 0.92) !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="dark"] .card-glass {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow:
+        inset 1.5px 1.5px 1px rgba(255, 255, 255, 0.18),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.1),
+        0 6px 12px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==================== PROGRESS ==================== */
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--fill-tertiary);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--system-blue);
+      border-radius: 2px;
+      transition: width var(--duration-slow) var(--ease-out);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--system-gray5);
+      border-top-color: var(--system-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+    .spinner-lg { width: 48px; height: 48px; border-width: 4px; }
+
+    /* ==================== ALERT (iOS 26 Glass Overlay) ==================== */
+    .alert-demo {
+      width: 270px;
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.6667);
+      backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+      -webkit-backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+      border-radius: 32px;
+      overflow: hidden;
+      border-top: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 1);
+      border-bottom: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 1);
+      border-right: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.8);
+      border-left: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.6);
+      box-shadow:
+        inset 0 0 8px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.08),
+        0 0 10px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        var(--shadow-xl);
+      transition: transform var(--duration-activated, 140ms) ease-out;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    /* Subtle scale-up when a button inside is pressed */
+    .alert-demo:has(.alert-btn:active) {
+      transform: scale(1.016) translateZ(0);
+    }
+    .alert-content {
+      padding: var(--space-5) var(--space-4);
+      text-align: center;
+    }
+    .alert-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-1);
+    }
+    .alert-message {
+      font-size: 13px;
+      color: var(--label-secondary);
+      line-height: 1.4;
+    }
+    .alert-actions {
+      border-top: 0.5px solid var(--separator);
+      display: flex;
+    }
+    .alert-btn {
+      flex: 1;
+      height: 44px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--system-blue);
+      transition: background var(--duration-activated, 140ms) ease-out;
+    }
+    .alert-btn:active {
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.065);
+    }
+    .alert-btn + .alert-btn {
+      border-left: 0.5px solid var(--separator);
+    }
+    .alert-btn-bold { font-weight: 600; }
+    .alert-btn-destructive { color: var(--system-red); }
+    /* Alert solid fallback */
+    @supports not (backdrop-filter: blur(1px)) {
+      .alert-demo {
+        background: var(--bg-tertiary);
+        border: none;
+      }
+    }
+
+    /* ==================== SHEET (iOS 26 Glass) ==================== */
+    .sheet-demo {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.6667);
+      backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+      -webkit-backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+      border-radius: 32px 32px 0 0;
+      border-top: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 1);
+      border-right: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.8);
+      border-left: 0.5px solid rgba(var(--glass-border-rgb, 255, 255, 255), 0.6);
+      box-shadow:
+        inset 0 0 8px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.08),
+        0 0 10px rgba(var(--glass-shadow-rgb, 220, 220, 220), 0.1),
+        var(--shadow-xl);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      .sheet-demo {
+        background: var(--bg-secondary);
+        border: none;
+      }
+    }
+    .sheet-handle {
+      width: 36px;
+      height: 5px;
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.4);
+      border-radius: 2.5px;
+      margin: var(--space-2) auto var(--space-4);
+    }
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--space-4) var(--space-3);
+      border-bottom: 0.5px solid var(--separator);
+    }
+    .sheet-cancel { font-size: 17px; color: var(--system-blue); background: none; border: none; cursor: pointer; }
+    .sheet-done { font-size: 17px; font-weight: 600; color: var(--system-blue); background: none; border: none; cursor: pointer; }
+    .sheet-body { padding: var(--space-4); }
+
+    /* ==================== HELPERS ==================== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      max-width: 360px;
+      margin-bottom: var(--space-4);
+    }
+
+    .glass-bg {
+      background: linear-gradient(135deg, var(--system-blue), var(--system-purple));
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html" class="topbar-back">&#8249; Zurück</a>
+    <span class="topbar-title">Komponenten</span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">&#9789;</span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </nav>
+
+  <div class="container">
+
+    <!-- Buttons -->
+    <div class="section">
+      <h2 class="section-title">Buttons</h2>
+      <div class="section-card">
+        <div class="component-label">Stile (iOS 26 — Scale-up 1.25× bei Press, 140ms ease-out)</div>
+        <div class="component-row">
+          <button class="btn-primary">Solid</button>
+          <button class="btn-glass">Glass</button>
+          <button class="btn-secondary">Tinted</button>
+          <button class="btn-gray">Gray</button>
+          <button class="btn-destructive">Destructive</button>
+          <button class="btn-text">Plain Text</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Größen (Small: 1.12×, Default: 1.25×, Large: 1.12×)</div>
+        <div class="component-row">
+          <button class="btn-primary btn-sm">Small</button>
+          <button class="btn-primary">Medium</button>
+          <button class="btn-primary btn-lg">Large</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Zustände</div>
+        <div class="component-row">
+          <button class="btn-primary">Normal</button>
+          <button class="btn-primary" disabled>Disabled</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Farb-Varianten</div>
+        <div class="component-row">
+          <button class="btn-primary" style="background: var(--system-green);">Bestätigen</button>
+          <button class="btn-primary" style="background: var(--system-orange);">Warnung</button>
+          <button class="btn-primary" style="background: var(--system-purple);">Premium</button>
+          <button class="btn-primary" style="background: var(--system-indigo);">Senden</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggle / Switch -->
+    <div class="section">
+      <h2 class="section-title">Toggle / Switch</h2>
+      <div class="section-card">
+        <div class="component-label">Standard (iOS 26 — 64×28, Glass on Press)</div>
+        <div class="demo-row">
+          <div>
+            <div class="component-label">Aus</div>
+            <label class="toggle">
+              <input type="checkbox">
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <div>
+            <div class="component-label">An</div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <div>
+            <div class="component-label">Disabled</div>
+            <label class="toggle toggle-disabled">
+              <input type="checkbox" disabled>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <div>
+            <div class="component-label">Disabled An</div>
+            <label class="toggle toggle-disabled">
+              <input type="checkbox" checked disabled>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Custom Farben</div>
+        <div class="demo-row">
+          <div>
+            <div class="component-label">Purple</div>
+            <label class="toggle" data-color>
+              <input type="checkbox" checked onchange="this.nextElementSibling.style.background = this.checked ? 'var(--system-purple)' : ''">
+              <span class="toggle-track" style="--toggle-color: var(--system-purple); background: var(--system-purple);"></span>
+            </label>
+          </div>
+          <div>
+            <div class="component-label">Orange</div>
+            <label class="toggle" data-color>
+              <input type="checkbox" checked onchange="this.nextElementSibling.style.background = this.checked ? 'var(--system-orange)' : ''">
+              <span class="toggle-track" style="--toggle-color: var(--system-orange); background: var(--system-orange);"></span>
+            </label>
+          </div>
+          <div>
+            <div class="component-label">Blue</div>
+            <label class="toggle" data-color>
+              <input type="checkbox" checked onchange="this.nextElementSibling.style.background = this.checked ? 'var(--system-blue)' : ''">
+              <span class="toggle-track" style="--toggle-color: var(--system-blue); background: var(--system-blue);"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label" style="font-size: 11px; color: var(--label-tertiary);">
+          Drücken &amp; halten: Handle wird zu Liquid Glass (scale 1.4×1.6, backdrop-filter blur, color-bleed Inset-Shadows) · Track staucht sich (scaleX 0.894)
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Fields -->
+    <div class="section">
+      <h2 class="section-title">Text-Eingabefelder</h2>
+      <div class="section-card">
+        <div class="form-group">
+          <label class="form-label">Standard</label>
+          <input class="input-field" type="text" placeholder="Platzhaltertext...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mit Wert</label>
+          <input class="input-field" type="text" value="Max Mustermann">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fehlerzustand</label>
+          <input class="input-field error" type="email" value="ungültige-email">
+          <div class="form-error">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Textarea</label>
+          <textarea class="input-field" rows="3" placeholder="Mehrzeiliger Text..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="section">
+      <h2 class="section-title">Suchleiste</h2>
+      <div class="section-card">
+        <div class="search-container" style="width: 100%; max-width: 100%;">
+          <span class="search-icon">&#128269;</span>
+          <input class="search-input" type="search" placeholder="Suchen...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Segmented Control -->
+    <div class="section">
+      <h2 class="section-title">Segmented Control</h2>
+      <div class="section-card">
+        <div class="component-label">2 Segmente</div>
+        <div class="component-row">
+          <div class="segmented-control" id="seg2">
+            <button class="segment active" onclick="activateSegment(this)">Stunde</button>
+            <button class="segment" onclick="activateSegment(this)">Tag</button>
+          </div>
+        </div>
+
+        <div class="component-label" style="margin-top: var(--space-4);">4 Segmente</div>
+        <div class="component-row">
+          <div class="segmented-control" id="seg4">
+            <button class="segment active" onclick="activateSegment(this)">Alle</button>
+            <button class="segment" onclick="activateSegment(this)">Fotos</button>
+            <button class="segment" onclick="activateSegment(this)">Videos</button>
+            <button class="segment" onclick="activateSegment(this)">Audio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="section">
+      <h2 class="section-title">Slider</h2>
+      <div class="section-card" style="display: flex; flex-direction: column; gap: var(--space-6);">
+
+        <!-- Standard mit gefüllter Spur -->
+        <div class="slider-container">
+          <div class="component-label">Lautstärke</div>
+          <div class="slider-row">
+            <span class="slider-icon">&#128264;</span>
+            <input class="slider slider-filled" type="range" min="0" max="100" value="50"
+              style="--slider-progress: 50%;"
+              oninput="this.style.setProperty('--slider-progress', this.value + '%'); this.closest('.slider-container').querySelector('.slider-value').textContent = this.value + '%'">
+            <span class="slider-icon slider-icon-lg">&#128266;</span>
+            <span class="slider-value">50%</span>
+          </div>
+        </div>
+
+        <!-- Helligkeit mit Icons -->
+        <div class="slider-container">
+          <div class="component-label">Helligkeit</div>
+          <div class="slider-row">
+            <span class="slider-icon">&#9788;</span>
+            <input class="slider slider-filled slider-orange" type="range" min="0" max="100" value="75"
+              style="--slider-progress: 75%;"
+              oninput="this.style.setProperty('--slider-progress', this.value + '%')">
+            <span class="slider-icon slider-icon-lg">&#9728;</span>
+          </div>
+        </div>
+
+        <!-- Einfach ohne Icons -->
+        <div class="slider-container">
+          <div class="component-label">Einfacher Slider</div>
+          <input class="slider slider-filled" type="range" min="0" max="100" value="30"
+            style="--slider-progress: 30%;"
+            oninput="this.style.setProperty('--slider-progress', this.value + '%')">
+        </div>
+
+        <!-- Schritte mit Tick-Marks -->
+        <div class="slider-container">
+          <div class="component-label">Textgröße</div>
+          <input class="slider slider-filled slider-green" type="range" min="12" max="24" step="2" value="16"
+            style="--slider-progress: 33.3%;"
+            oninput="this.style.setProperty('--slider-progress', ((this.value - this.min) / (this.max - this.min) * 100) + '%'); this.closest('.slider-container').querySelector('.slider-value').textContent = this.value + 'pt'">
+          <div class="slider-ticks">
+            <span class="slider-tick">12</span>
+            <span class="slider-tick">14</span>
+            <span class="slider-tick">16</span>
+            <span class="slider-tick">18</span>
+            <span class="slider-tick">20</span>
+            <span class="slider-tick">22</span>
+            <span class="slider-tick">24</span>
+          </div>
+          <div style="text-align: center; margin-top: var(--space-1);">
+            <span class="slider-value" style="font-size: 13px;">16pt</span>
+          </div>
+        </div>
+
+        <!-- Deaktiviert -->
+        <div class="slider-container">
+          <div class="component-label">Deaktiviert</div>
+          <input class="slider slider-filled" type="range" min="0" max="100" value="60" disabled
+            style="--slider-progress: 60%;">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Liquid Glass Slider -->
+    <div class="section">
+      <h2 class="section-title">Liquid Glass Slider</h2>
+      <div class="lg-demo-container">
+
+        <div class="slider-container" style="position: relative; z-index: 1;">
+          <div class="lg-slider-label">
+            <div class="component-label">Lautstärke: <span id="lg-slider-val-1">50</span>%</div>
+            <span class="lg-slider-badge">SVG Refraction</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-icon">&#128264;</span>
+            <div class="lg-slider" data-value="50" data-min="0" data-max="100" id="lg-slider-1">
+              <div class="lg-slider-track">
+                <div class="lg-slider-clip">
+                  <div class="lg-slider-fill" style="width: 50%;"></div>
+                </div>
+              </div>
+              <div class="lg-slider-thumb"></div>
+            </div>
+            <span class="slider-icon slider-icon-lg">&#128266;</span>
+          </div>
+        </div>
+
+        <div class="slider-container" style="position: relative; z-index: 1;">
+          <div class="lg-slider-label">
+            <div class="component-label">Helligkeit: <span id="lg-slider-val-2">75</span>%</div>
+          </div>
+          <div class="slider-row">
+            <span class="slider-icon">&#9788;</span>
+            <div class="lg-slider" data-value="75" data-min="0" data-max="100" data-color="orange" id="lg-slider-2">
+              <div class="lg-slider-track">
+                <div class="lg-slider-clip">
+                  <div class="lg-slider-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+              <div class="lg-slider-thumb"></div>
+            </div>
+            <span class="slider-icon slider-icon-lg">&#9728;</span>
+          </div>
+        </div>
+
+        <div style="position: relative; z-index: 1; font-size: 11px; color: var(--label-tertiary); text-align: center;">
+          Pill-Thumb mit SVG feDisplacementMap (Snell's Law, n=1.5) · Chrome: Refraction · Andere: Blur-Fallback
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SVG filter for Liquid Glass Slider thumb -->
+    <svg color-interpolation-filters="sRGB" style="display: none;" aria-hidden="true">
+      <defs>
+        <filter id="lg-thumb-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blurred_source" />
+          <feImage id="lg-thumb-displacement" x="0" y="0" width="90" height="60" result="displacement_map" />
+          <feDisplacementMap in="blurred_source" in2="displacement_map" scale="34" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+          <feColorMatrix in="displaced" type="saturate" result="displaced_saturated" values="7" />
+          <feImage id="lg-thumb-specular" x="0" y="0" width="90" height="60" result="specular_layer" />
+          <feComposite in="displaced_saturated" in2="specular_layer" operator="in" result="specular_saturated" />
+          <feComponentTransfer in="specular_layer" result="specular_faded">
+            <feFuncA type="linear" slope="0.4" />
+          </feComponentTransfer>
+          <feBlend in="specular_saturated" in2="displaced" mode="normal" result="withSaturation" />
+          <feBlend in="specular_faded" in2="withSaturation" mode="normal" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Badges -->
+    <div class="section">
+      <h2 class="section-title">Badges</h2>
+      <div class="section-card">
+        <div class="component-label">Status-Badges</div>
+        <div class="component-row">
+          <span class="badge badge-success">Aktiv</span>
+          <span class="badge badge-warning">Ausstehend</span>
+          <span class="badge badge-error">Fehler</span>
+          <span class="badge badge-info">Info</span>
+          <span class="badge badge-purple">Neu</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Benachrichtigungs-Badges</div>
+        <div class="component-row">
+          <span class="notification-dot"></span>
+          <span class="count-badge">3</span>
+          <span class="count-badge">12</span>
+          <span class="count-badge">99+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="section">
+      <h2 class="section-title">Cards</h2>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="component-label" style="margin-bottom: var(--space-1);">Standard Card</div>
+          <p style="font-size: 15px; color: var(--label-secondary); line-height: 1.5;">Flacher Hintergrund ohne Schatten. Hover hebt die Karte an.</p>
+        </div>
+        <div class="card card-elevated">
+          <div class="component-label" style="margin-bottom: var(--space-1);">Elevated Card</div>
+          <p style="font-size: 15px; color: var(--label-secondary); line-height: 1.5;">Mit Schatten für visuelle Tiefe und Hervorhebung.</p>
+        </div>
+        <div class="glass-bg">
+          <div class="card card-glass">
+            <div class="component-label" style="margin-bottom: var(--space-1);">Glass Card</div>
+            <p style="font-size: 15px; color: var(--label-secondary); line-height: 1.5;">Transparenz mit Blur-Effekt für Liquid Glass Stil.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Indicators -->
+    <div class="section">
+      <h2 class="section-title">Fortschrittsanzeigen</h2>
+      <div class="section-card">
+        <div class="component-label">Fortschrittsbalken</div>
+        <div style="max-width: 400px; margin-bottom: var(--space-4);">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 35%;"></div>
+          </div>
+          <div style="font-size: 13px; color: var(--label-secondary); margin-top: var(--space-1);">35% abgeschlossen</div>
+        </div>
+        <div style="max-width: 400px; margin-bottom: var(--space-6);">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%; background: var(--system-green);"></div>
+          </div>
+          <div style="font-size: 13px; color: var(--label-secondary); margin-top: var(--space-1);">75% abgeschlossen</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="component-label">Spinner</div>
+        <div class="component-row">
+          <div>
+            <div class="spinner spinner-sm"></div>
+            <div style="font-size: 11px; color: var(--label-tertiary); margin-top: var(--space-1); text-align: center;">SM</div>
+          </div>
+          <div>
+            <div class="spinner"></div>
+            <div style="font-size: 11px; color: var(--label-tertiary); margin-top: var(--space-1); text-align: center;">MD</div>
+          </div>
+          <div>
+            <div class="spinner spinner-lg"></div>
+            <div style="font-size: 11px; color: var(--label-tertiary); margin-top: var(--space-1); text-align: center;">LG</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert -->
+    <div class="section">
+      <h2 class="section-title">Alert-Dialog</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-6);">
+        <div class="alert-demo">
+          <div class="alert-content">
+            <div class="alert-title">Foto löschen?</div>
+            <div class="alert-message">Dieses Foto wird dauerhaft gelöscht und kann nicht wiederhergestellt werden.</div>
+          </div>
+          <div class="alert-actions">
+            <button class="alert-btn">Abbrechen</button>
+            <button class="alert-btn alert-btn-destructive alert-btn-bold">Löschen</button>
+          </div>
+        </div>
+
+        <div class="alert-demo">
+          <div class="alert-content">
+            <div class="alert-title">Aenderungen sichern?</div>
+            <div class="alert-message">Du hast ungespeicherte Änderungen. Möchtest du sie sichern?</div>
+          </div>
+          <div class="alert-actions">
+            <button class="alert-btn">Verwerfen</button>
+            <button class="alert-btn alert-btn-bold">Sichern</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Sheet -->
+    <div class="section">
+      <h2 class="section-title">Bottom Sheet</h2>
+      <div class="sheet-demo">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <button class="sheet-cancel">Abbrechen</button>
+          <span style="font-size: 17px; font-weight: 600; color: var(--label-primary);">Teilen</span>
+          <button class="sheet-done">Fertig</button>
+        </div>
+        <div class="sheet-body">
+          <div style="display: flex; gap: var(--space-4); overflow-x: auto; padding: var(--space-3) 0;">
+            <div style="text-align: center; flex-shrink: 0;">
+              <div style="width: 60px; height: 60px; background: var(--system-blue); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">&#9993;</div>
+              <div style="font-size: 11px; color: var(--label-primary); margin-top: var(--space-1);">Nachricht</div>
+            </div>
+            <div style="text-align: center; flex-shrink: 0;">
+              <div style="width: 60px; height: 60px; background: var(--system-green); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">&#128279;</div>
+              <div style="font-size: 11px; color: var(--label-primary); margin-top: var(--space-1);">Link kopieren</div>
+            </div>
+            <div style="text-align: center; flex-shrink: 0;">
+              <div style="width: 60px; height: 60px; background: var(--system-orange); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">&#128247;</div>
+              <div style="font-size: 11px; color: var(--label-primary); margin-top: var(--space-1);">Foto</div>
+            </div>
+            <div style="text-align: center; flex-shrink: 0;">
+              <div style="width: 60px; height: 60px; background: var(--system-purple); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">&#128230;</div>
+              <div style="font-size: 11px; color: var(--label-primary); margin-top: var(--space-1);">Dateien</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animations -->
+    <div class="section">
+      <h2 class="section-title">Animationen</h2>
+      <div class="section-card">
+        <div class="component-label">Klicke zum Abspielen</div>
+        <div class="component-row">
+          <button class="btn-primary btn-sm" onclick="playAnim(this, 'animate-fade-in')">Fade In</button>
+          <button class="btn-primary btn-sm" onclick="playAnim(this, 'animate-slide-up')">Slide Up</button>
+          <button class="btn-primary btn-sm" onclick="playAnim(this, 'animate-scale-in')">Scale In</button>
+        </div>
+        <div id="anim-target" style="margin-top: var(--space-4); padding: var(--space-4); background: var(--fill-tertiary); border-radius: var(--radius-lg); text-align: center; color: var(--label-primary); font-size: 15px;">
+          Animiertes Element
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+        html.style.colorScheme = 'light';
+        document.getElementById('theme-icon').textContent = '\u263D';
+        document.getElementById('theme-label').textContent = 'Dark';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        html.style.colorScheme = 'dark';
+        document.getElementById('theme-icon').textContent = '\u2600';
+        document.getElementById('theme-label').textContent = 'Light';
+      }
+    }
+
+    function activateSegment(el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.segment').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function playAnim(btn, className) {
+      const target = document.getElementById('anim-target');
+      target.classList.remove('animate-fade-in', 'animate-slide-up', 'animate-scale-in');
+      // Force reflow
+      void target.offsetWidth;
+      target.classList.add(className);
+    }
+
+    /* ================================================================
+       Liquid Glass Slider — SVG displacement/specular map generation
+       Based on kube.io/blog/liquid-glass-css-svg (Snell's Law, n=1.5)
+       ================================================================ */
+    (function initLiquidGlassSliders() {
+      const W = 90, H = 60, R = 30; // thumb dimensions & radius
+      const N = 1.5; // glass refractive index
+
+      // Squircle surface profile: y = (1 - (1-x)^4)^0.25
+      function squircle(t) {
+        const c = Math.max(0, Math.min(1, t));
+        return Math.pow(1 - Math.pow(1 - c, 4), 0.25);
+      }
+
+      // Stadium/pill signed distance (0 at edge, 1 at deepest interior)
+      function pillSDF(px, py) {
+        const cx = W / 2, cy = H / 2;
+        // Clamp X to the flat center section
+        const clampedX = Math.max(R, Math.min(W - R, px));
+        const dx = px - clampedX;
+        const dy = py - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        return Math.max(0, 1 - dist / R);
+      }
+
+      function generateDisplacementMap() {
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        const img = ctx.createImageData(W, H);
+        const d = img.data;
+
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            const idx = (y * W + x) * 4;
+            const interior = pillSDF(x, y);
+
+            if (interior <= 0) {
+              d[idx] = 128; d[idx+1] = 128; d[idx+2] = 128; d[idx+3] = 255;
+              continue;
+            }
+
+            const height = squircle(interior);
+            const delta = 0.001;
+            const h1 = squircle(interior - delta);
+            const h2 = squircle(interior + delta);
+            const deriv = (h2 - h1) / (2 * delta);
+            const normalMag = Math.sqrt(deriv * deriv + 1);
+            const sinT1 = Math.abs(deriv) / normalMag;
+            const sinT2 = sinT1 / N;
+            const displacement = (sinT1 - sinT2) * height * 0.8;
+
+            // Direction: radial from nearest edge center
+            const cx = W / 2, cy = H / 2;
+            const clampedX = Math.max(R, Math.min(W - R, x));
+            const ex = x - clampedX;
+            const ey = y - cy;
+            const elen = Math.sqrt(ex * ex + ey * ey) || 1;
+            const dx = (ex / elen) * displacement;
+            const dy = (ey / elen) * displacement;
+
+            d[idx]   = Math.round(128 + dx * 127);
+            d[idx+1] = Math.round(128 + dy * 127);
+            d[idx+2] = 128;
+            d[idx+3] = 255;
+          }
+        }
+        ctx.putImageData(img, 0, 0);
+        return canvas.toDataURL();
+      }
+
+      function generateSpecularMap() {
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        const img = ctx.createImageData(W, H);
+        const d = img.data;
+
+        // Light from top-left
+        const lightX = -0.4, lightY = -0.6, lightZ = 0.7;
+        const lLen = Math.sqrt(lightX*lightX + lightY*lightY + lightZ*lightZ);
+        const lx = lightX/lLen, ly = lightY/lLen, lz = lightZ/lLen;
+
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            const idx = (y * W + x) * 4;
+            const interior = pillSDF(x, y);
+
+            if (interior <= 0) {
+              d[idx] = 0; d[idx+1] = 0; d[idx+2] = 0; d[idx+3] = 0;
+              continue;
+            }
+
+            // Surface normal from squircle
+            const height = squircle(interior);
+            const delta = 0.002;
+            const h1 = squircle(Math.max(0, interior - delta));
+            const h2 = squircle(Math.min(1, interior + delta));
+            const slope = (h2 - h1) / (2 * delta);
+
+            // Normal direction: radial from edge + z
+            const cx = W / 2, cy = H / 2;
+            const clampedX = Math.max(R, Math.min(W - R, x));
+            const ex = x - clampedX;
+            const ey = y - cy;
+            const elen = Math.sqrt(ex * ex + ey * ey) || 1;
+            const nx = -(ex / elen) * slope;
+            const ny = -(ey / elen) * slope;
+            const nz = 1;
+            const nLen = Math.sqrt(nx*nx + ny*ny + nz*nz);
+
+            // Specular: reflect light around normal, take z component
+            const dot = (nx/nLen)*lx + (ny/nLen)*ly + (nz/nLen)*lz;
+            const spec = Math.pow(Math.max(0, dot), 25) * 0.9;
+
+            // Rim/edge glow
+            const rim = Math.pow(1 - interior, 2) * 0.4;
+            const intensity = Math.min(1, spec + rim);
+
+            const val = Math.round(intensity * 255);
+            d[idx] = val; d[idx+1] = val; d[idx+2] = val;
+            d[idx+3] = Math.round(intensity * 200);
+          }
+        }
+        ctx.putImageData(img, 0, 0);
+        return canvas.toDataURL();
+      }
+
+      // Generate maps and set SVG filter images
+      const displacementUrl = generateDisplacementMap();
+      const specularUrl = generateSpecularMap();
+
+      const feDisp = document.getElementById('lg-thumb-displacement');
+      const feSpec = document.getElementById('lg-thumb-specular');
+      if (feDisp) feDisp.setAttribute('href', displacementUrl);
+      if (feSpec) feSpec.setAttribute('href', specularUrl);
+
+      // Check if SVG backdrop-filter works (Chrome only)
+      function supportsBackdropSVG() {
+        const test = document.createElement('div');
+        test.style.backdropFilter = 'url(#test-does-not-exist)';
+        return test.style.backdropFilter !== '';
+      }
+
+      const hasSVGBackdrop = supportsBackdropSVG();
+
+      // Init each liquid glass slider
+      document.querySelectorAll('.lg-slider').forEach(slider => {
+        const track = slider.querySelector('.lg-slider-track');
+        const fill = slider.querySelector('.lg-slider-fill');
+        const thumb = slider.querySelector('.lg-slider-thumb');
+        const min = parseFloat(slider.dataset.min || 0);
+        const max = parseFloat(slider.dataset.max || 100);
+        let value = parseFloat(slider.dataset.value || 50);
+        const color = slider.dataset.color;
+
+        if (color === 'orange') {
+          fill.style.background = 'var(--system-orange)';
+        }
+
+        // Mark fallback for non-Chrome browsers
+        if (!hasSVGBackdrop) {
+          thumb.classList.add('fallback');
+        }
+
+        function activateGlass() {
+          thumb.classList.add('active');
+          if (hasSVGBackdrop) {
+            thumb.style.backdropFilter = 'url(#lg-thumb-filter)';
+            thumb.style.webkitBackdropFilter = 'url(#lg-thumb-filter)';
+          }
+        }
+
+        function deactivateGlass() {
+          thumb.classList.remove('active');
+          if (hasSVGBackdrop) {
+            thumb.style.backdropFilter = 'none';
+            thumb.style.webkitBackdropFilter = 'none';
+          }
+        }
+
+        const THUMB_DOM_W = 90; // element width before scale
+
+        function update(val) {
+          value = Math.max(min, Math.min(max, val));
+          slider.dataset.value = value;
+          const pct = (value - min) / (max - min);
+          fill.style.width = (pct * 100) + '%';
+          const trackW = track.offsetWidth;
+          // Center the thumb on the fill percentage point
+          // thumb center (at half of 90px DOM width) aligns with pct * trackW
+          const thumbLeft = pct * trackW - THUMB_DOM_W / 2;
+          thumb.style.left = thumbLeft + 'px';
+
+          // Update linked value display
+          const labelSpan = slider.closest('.slider-container')
+            ?.querySelector('[id^="lg-slider-val"]');
+          if (labelSpan) labelSpan.textContent = Math.round(value);
+        }
+
+        function valueFromX(clientX) {
+          const rect = track.getBoundingClientRect();
+          const x = clientX - rect.left;
+          const pct = Math.max(0, Math.min(1, x / rect.width));
+          return min + pct * (max - min);
+        }
+
+        // Mouse drag
+        thumb.addEventListener('mousedown', e => {
+          e.preventDefault();
+          activateGlass();
+          const onMove = ev => update(valueFromX(ev.clientX));
+          const onUp = () => {
+            deactivateGlass();
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+          };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+
+        // Touch drag
+        thumb.addEventListener('touchstart', e => {
+          activateGlass();
+          const onMove = ev => {
+            ev.preventDefault();
+            update(valueFromX(ev.touches[0].clientX));
+          };
+          const onEnd = () => {
+            deactivateGlass();
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('touchend', onEnd);
+          };
+          document.addEventListener('touchmove', onMove, { passive: false });
+          document.addEventListener('touchend', onEnd);
+        }, { passive: true });
+
+        // Click on track
+        track.addEventListener('click', e => update(valueFromX(e.clientX)));
+
+        // Initial position
+        update(value);
+
+        // Re-position on resize
+        const ro = new ResizeObserver(() => update(value));
+        ro.observe(track);
+      });
+    })();
+  </script>
+</body>
+</html>

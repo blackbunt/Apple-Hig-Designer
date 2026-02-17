@@ -1,0 +1,1051 @@
+/**
+ * Apple HIG Design Tokens
+ * Version 3.0 -- Verified against Apple HIG, iOS UIKit, Flutter CupertinoColors
+ *
+ * Covers: iOS 17-26, macOS 14-15/Tahoe, iPadOS, watchOS 10-11, visionOS 1-2
+ * Includes: Liquid Glass utilities, spring animation via linear(), full type scale
+ *
+ * Usage:
+ *   @import 'design-tokens.css';
+ *   or <link rel="stylesheet" href="design-tokens.css">
+ */
+
+/* ============================================================================
+   ROOT VARIABLES - LIGHT MODE (DEFAULT)
+   ============================================================================ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ==========================================================================
+     TYPOGRAPHY
+     ========================================================================== */
+
+  /* Font Families */
+  --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+                 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco,
+               'Cascadia Code', 'Consolas', monospace;
+  --font-rounded: -apple-system-rounded, 'SF Pro Rounded', 'Helvetica Neue Rounded',
+                  var(--font-system);
+  --font-serif: 'New York', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+
+  /* iOS Type Scale -- Size, Weight, Line-Height, Letter-Spacing */
+  --text-large-title: 34px;
+  --text-large-title-weight: 400;
+  --text-large-title-lh: 1.21;    /* 41/34 */
+  --text-large-title-ls: 0.01em;  /* 0.37pt */
+
+  --text-title1: 28px;
+  --text-title1-weight: 400;
+  --text-title1-lh: 1.21;         /* 34/28 */
+  --text-title1-ls: 0.01em;       /* 0.36pt */
+
+  --text-title2: 22px;
+  --text-title2-weight: 400;
+  --text-title2-lh: 1.27;         /* 28/22 */
+  --text-title2-ls: 0.01em;       /* 0.35pt */
+
+  --text-title3: 20px;
+  --text-title3-weight: 400;
+  --text-title3-lh: 1.25;         /* 25/20 */
+  --text-title3-ls: 0.01em;       /* 0.38pt */
+
+  --text-headline: 17px;
+  --text-headline-weight: 600;
+  --text-headline-lh: 1.29;       /* 22/17 */
+  --text-headline-ls: -0.02em;    /* -0.43pt */
+
+  --text-body: 17px;
+  --text-body-weight: 400;
+  --text-body-lh: 1.29;           /* 22/17 */
+  --text-body-ls: -0.02em;        /* -0.43pt */
+
+  --text-callout: 16px;
+  --text-callout-weight: 400;
+  --text-callout-lh: 1.31;        /* 21/16 */
+  --text-callout-ls: -0.01em;     /* -0.32pt */
+
+  --text-subhead: 15px;
+  --text-subhead-weight: 400;
+  --text-subhead-lh: 1.33;        /* 20/15 */
+  --text-subhead-ls: -0.01em;     /* -0.24pt */
+
+  --text-footnote: 13px;
+  --text-footnote-weight: 400;
+  --text-footnote-lh: 1.38;       /* 18/13 */
+  --text-footnote-ls: 0;          /* -0.08pt ~ 0 */
+
+  --text-caption1: 12px;
+  --text-caption1-weight: 400;
+  --text-caption1-lh: 1.33;       /* 16/12 */
+  --text-caption1-ls: 0;
+
+  --text-caption2: 11px;
+  --text-caption2-weight: 400;
+  --text-caption2-lh: 1.18;       /* 13/11 */
+  --text-caption2-ls: 0.01em;     /* 0.07pt */
+
+  /* Display Sizes -- For hero/marketing sections (not part of iOS type scale) */
+  --text-display-sm: 40px;
+  --text-display-md: 56px;
+  --text-display-lg: 80px;
+  --text-display-xl: 96px;
+
+  /* Font Weights */
+  --font-weight-ultralight: 100;
+  --font-weight-thin: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-heavy: 800;
+  --font-weight-black: 900;
+
+  /* ==========================================================================
+     COLORS - LIGHT MODE
+     ========================================================================== */
+
+  /* Primary System Colors (12 colors) */
+  --system-blue: #007AFF;
+  --system-green: #34C759;
+  --system-indigo: #5856D6;
+  --system-orange: #FF9500;
+  --system-pink: #FF2D55;
+  --system-purple: #AF52DE;
+  --system-red: #FF3B30;
+  --system-teal: #5AC8FA;
+  --system-yellow: #FFCC00;
+  --system-cyan: #32ADE6;
+  --system-mint: #00C7BE;
+  --system-brown: #A2845E;
+
+  /* Gray Scale (6 levels) */
+  --system-gray: #8E8E93;
+  --system-gray2: #AEAEB2;
+  --system-gray3: #C7C7CC;
+  --system-gray4: #D1D1D6;
+  --system-gray5: #E5E5EA;
+  --system-gray6: #F2F2F7;
+
+  /* Label Colors (Text hierarchy) */
+  --label-primary: #000000;
+  --label-secondary: rgba(60, 60, 67, 0.6);
+  --label-tertiary: rgba(60, 60, 67, 0.3);
+  --label-quaternary: rgba(60, 60, 67, 0.18);
+
+  /* Fill Colors (Thin overlays: text fields, segmented controls) */
+  --fill-primary: rgba(120, 120, 128, 0.2);
+  --fill-secondary: rgba(120, 120, 128, 0.16);
+  --fill-tertiary: rgba(120, 120, 128, 0.12);
+  --fill-quaternary: rgba(120, 120, 128, 0.08);
+
+  /* Background Colors -- Standard */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F2F2F7;
+  --bg-tertiary: #FFFFFF;
+
+  /* Background Colors -- Grouped (Settings-style) */
+  --bg-grouped-primary: #F2F2F7;
+  --bg-grouped-secondary: #FFFFFF;
+  --bg-grouped-tertiary: #F2F2F7;
+
+  /* Separator Colors */
+  --separator: rgba(60, 60, 67, 0.29);
+  --separator-opaque: #C6C6C8;
+
+  /* ==========================================================================
+     SPACING - 8PT GRID SYSTEM
+     ========================================================================== */
+
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ==========================================================================
+     BORDER RADIUS
+     ========================================================================== */
+
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+  --radius-full: 9999px;
+
+  /* Semantic Radius */
+  --radius-button: var(--radius-full);
+  --radius-card: var(--radius-xl);
+  --radius-modal: var(--radius-xl);
+  --radius-sheet: var(--radius-xl);
+  --radius-input: var(--radius-md);
+  --radius-alert: 14px;
+  --radius-list-section: 10px;
+  --radius-sidebar-item: 8px;
+
+  /* ==========================================================================
+     SHADOWS & ELEVATION
+     ========================================================================== */
+
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.04), 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06), 0 8px 10px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+  /* Focus & Error Rings */
+  --shadow-focus: 0 0 0 4px rgba(0, 122, 255, 0.3);
+  --shadow-focus-error: 0 0 0 4px rgba(255, 59, 48, 0.3);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* Component-specific shadows */
+  --shadow-toggle-knob: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.06);
+  --shadow-slider-thumb: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.06);
+
+  /* ==========================================================================
+     iOS 26 LIQUID GLASS CONTROL TOKENS
+     Source: rdlabo-team/ionic-theme-ios26
+     ========================================================================== */
+
+  /* Glass surface RGB — used with rgba() for variable opacity */
+  --glass-bg-rgb: 255, 255, 255;
+  --glass-border-rgb: 255, 255, 255;
+  --glass-shadow-rgb: 220, 220, 220;
+  --glass-selected-rgb: 16, 16, 16;
+
+  /* Glass default: 72% opacity, 2px blur, 360% saturate */
+  --glass-opacity: 0.72;
+  --glass-blur: 2px;
+  --glass-saturate: 360%;
+
+  /* Toggle / Switch — iOS 26 (wider, glass activation) */
+  --toggle-width: 64px;
+  --toggle-height: 28px;
+  --toggle-handle-width: 38px;
+  --toggle-handle-height: 24px;
+  --toggle-track-off: rgba(0, 0, 0, 0.23);
+  --toggle-activated-scale: scale(1.4, 1.6);
+  --toggle-activated-duration: 280ms;
+
+  /* Control activation timing */
+  --duration-activated: 140ms;
+
+  /* ==========================================================================
+     ANIMATION & TRANSITIONS
+     ========================================================================== */
+
+  /* Durations */
+  --duration-instant: 50ms;
+  --duration-faster: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 400ms;
+  --duration-slowest: 500ms;
+
+  /* Easing Functions */
+  --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+
+  /* Spring Easings (cubic-bezier approximations) */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Apple Spring via linear() -- duration=0.5s, bounce=0.15 (WWDC 2023+) */
+  --ease-spring-linear: linear(
+    0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%,
+    0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%,
+    1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32%,
+    1.051 36.4%, 1.017 38.8%, 0.991, 0.977 43%,
+    0.974 44.8%, 0.975 47.2%, 0.987 50.3%, 1.001 54.2%,
+    1.007 58.8%, 1 68.2%, 0.998 72%, 1
+  );
+
+  /* ==========================================================================
+     LAYOUT
+     ========================================================================== */
+
+  /* Content Width Constraints */
+  --width-reading: 672px;
+  --width-form: 440px;
+  --width-app: 980px;
+  --width-container: 1200px;
+  --width-max: 1440px;
+
+  /* Breakpoints (for reference; use in @media queries) */
+  --breakpoint-compact: 430px;
+  --breakpoint-regular: 744px;
+  --breakpoint-large: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
+
+  /* ==========================================================================
+     TOUCH TARGETS
+     ========================================================================== */
+
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
+  --touch-target-spacious: 56px;
+  --touch-target-vision: 60px;
+  --touch-target-macos: 24px;
+
+  /* ==========================================================================
+     BLUR & BACKDROP
+     ========================================================================== */
+
+  --blur-none: 0;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+  --blur-3xl: 64px;
+
+  --backdrop-blur: blur(20px) saturate(180%);
+  --backdrop-blur-heavy: blur(40px) saturate(180%);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* System Colors -- Dark Mode (more vibrant for contrast on dark bg) */
+    --system-blue: #0A84FF;
+    --system-green: #30D158;
+    --system-indigo: #5E5CE6;
+    --system-orange: #FF9F0A;
+    --system-pink: #FF375F;
+    --system-purple: #BF5AF2;
+    --system-red: #FF453A;
+    --system-teal: #64D2FF;
+    --system-yellow: #FFD60A;
+    --system-cyan: #64D2FF;
+    --system-mint: #63E6E2;
+    --system-brown: #AC8E68;
+
+    /* Gray Scale -- Dark Mode (inverted: lighter numbers = darker colors) */
+    --system-gray: #8E8E93;   /* unchanged */
+    --system-gray2: #636366;
+    --system-gray3: #48484A;
+    --system-gray4: #3A3A3C;
+    --system-gray5: #2C2C2E;
+    --system-gray6: #1C1C1E;
+
+    /* Label Colors -- Dark Mode */
+    --label-primary: #FFFFFF;
+    --label-secondary: rgba(235, 235, 245, 0.6);
+    --label-tertiary: rgba(235, 235, 245, 0.3);
+    --label-quaternary: rgba(235, 235, 245, 0.18);
+
+    /* Fill Colors -- Dark Mode (higher opacity) */
+    --fill-primary: rgba(120, 120, 128, 0.36);
+    --fill-secondary: rgba(120, 120, 128, 0.32);
+    --fill-tertiary: rgba(120, 120, 128, 0.24);
+    --fill-quaternary: rgba(120, 120, 128, 0.18);
+
+    /* Background Colors -- Dark Mode */
+    --bg-primary: #000000;
+    --bg-secondary: #1C1C1E;
+    --bg-tertiary: #2C2C2E;
+
+    /* Grouped Backgrounds -- Dark Mode */
+    --bg-grouped-primary: #000000;
+    --bg-grouped-secondary: #1C1C1E;
+    --bg-grouped-tertiary: #2C2C2E;
+
+    /* Separator Colors -- Dark Mode */
+    --separator: rgba(84, 84, 88, 0.6);
+    --separator-opaque: #38383A;
+
+    /* Shadows -- Dark Mode (higher opacity, visible on dark backgrounds) */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4), 0 8px 10px rgba(0, 0, 0, 0.5);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
+
+    /* Component shadows -- Dark Mode */
+    --shadow-toggle-knob: 0 3px 8px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    --shadow-slider-thumb: 0 3px 8px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+
+    /* iOS 26 Glass -- Dark Mode */
+    --glass-bg-rgb: 62, 62, 62;
+    --glass-border-rgb: 68, 68, 68;
+    --glass-shadow-rgb: 0, 0, 0;
+    --glass-selected-rgb: 255, 255, 255;
+
+    /* Toggle track adapts: white text at 23% opacity → visible on dark */
+    --toggle-track-off: rgba(255, 255, 255, 0.23);
+  }
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE
+   ============================================================================ */
+
+@media (prefers-contrast: high) {
+  :root {
+    /* Higher opacity for secondary/tertiary text */
+    --label-secondary: rgba(60, 60, 67, 0.8);
+    --label-tertiary: rgba(60, 60, 67, 0.6);
+    --separator: rgba(60, 60, 67, 0.5);
+
+    /* High-contrast system colors (Apple-specified) */
+    --system-blue: #0040DD;
+    --system-green: #248A3D;
+    --system-indigo: #3634A3;
+    --system-orange: #C93400;
+    --system-pink: #D30F45;
+    --system-purple: #8944AB;
+    --system-red: #D70015;
+    --system-teal: #0071A4;
+    --system-yellow: #A05A00;
+    --system-cyan: #0071A4;
+    --system-mint: #0C817B;
+    --system-brown: #7C6545;
+  }
+}
+
+@media (prefers-contrast: high) and (prefers-color-scheme: dark) {
+  :root {
+    --label-secondary: rgba(235, 235, 245, 0.8);
+    --label-tertiary: rgba(235, 235, 245, 0.6);
+    --separator: rgba(84, 84, 88, 0.8);
+
+    /* High-contrast dark mode system colors (Apple-specified) */
+    --system-blue: #409CFF;
+    --system-green: #30DB5B;
+    --system-indigo: #7D7AFF;
+    --system-orange: #FFB340;
+    --system-pink: #FF6482;
+    --system-purple: #DA8FFF;
+    --system-red: #FF6961;
+    --system-teal: #70D7FF;
+    --system-yellow: #FFD426;
+    --system-cyan: #70D7FF;
+    --system-mint: #66D4CF;
+    --system-brown: #B59469;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-faster: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+    --duration-slowest: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   BASE RESET & DEFAULTS
+   ============================================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-system);
+  font-size: 16px;
+  line-height: var(--text-body-lh);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
+  font-family: var(--font-system);
+  font-size: var(--text-body);
+  letter-spacing: var(--text-body-ls);
+  color: var(--label-primary);
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Remove default tap highlight on iOS */
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove default appearance for form elements */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ============================================================================
+   TYPOGRAPHY UTILITY CLASSES
+   ============================================================================ */
+
+.text-large-title {
+  font-size: var(--text-large-title);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--text-large-title-lh);
+  letter-spacing: var(--text-large-title-ls);
+}
+
+.text-title1 {
+  font-size: var(--text-title1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--text-title1-lh);
+  letter-spacing: var(--text-title1-ls);
+}
+
+.text-title2 {
+  font-size: var(--text-title2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--text-title2-lh);
+  letter-spacing: var(--text-title2-ls);
+}
+
+.text-title3 {
+  font-size: var(--text-title3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--text-title3-lh);
+  letter-spacing: var(--text-title3-ls);
+}
+
+.text-headline {
+  font-size: var(--text-headline);
+  font-weight: var(--text-headline-weight);
+  line-height: var(--text-headline-lh);
+  letter-spacing: var(--text-headline-ls);
+}
+
+.text-body {
+  font-size: var(--text-body);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-lh);
+  letter-spacing: var(--text-body-ls);
+}
+
+.text-callout {
+  font-size: var(--text-callout);
+  font-weight: var(--text-callout-weight);
+  line-height: var(--text-callout-lh);
+  letter-spacing: var(--text-callout-ls);
+}
+
+.text-subhead {
+  font-size: var(--text-subhead);
+  font-weight: var(--text-subhead-weight);
+  line-height: var(--text-subhead-lh);
+  letter-spacing: var(--text-subhead-ls);
+}
+
+.text-footnote {
+  font-size: var(--text-footnote);
+  font-weight: var(--text-footnote-weight);
+  line-height: var(--text-footnote-lh);
+  letter-spacing: var(--text-footnote-ls);
+}
+
+.text-caption1 {
+  font-size: var(--text-caption1);
+  font-weight: var(--text-caption1-weight);
+  line-height: var(--text-caption1-lh);
+  letter-spacing: var(--text-caption1-ls);
+}
+
+.text-caption2 {
+  font-size: var(--text-caption2);
+  font-weight: var(--text-caption2-weight);
+  line-height: var(--text-caption2-lh);
+  letter-spacing: var(--text-caption2-ls);
+}
+
+/* Display sizes for hero/marketing */
+.text-display-sm { font-size: var(--text-display-sm); font-weight: var(--font-weight-bold); line-height: 1.1; letter-spacing: -0.02em; }
+.text-display-md { font-size: var(--text-display-md); font-weight: var(--font-weight-bold); line-height: 1.05; letter-spacing: -0.025em; }
+.text-display-lg { font-size: var(--text-display-lg); font-weight: var(--font-weight-bold); line-height: 1.05; letter-spacing: -0.03em; }
+.text-display-xl { font-size: var(--text-display-xl); font-weight: var(--font-weight-bold); line-height: 1.0; letter-spacing: -0.03em; }
+
+/* Text Colors */
+.text-primary { color: var(--label-primary); }
+.text-secondary { color: var(--label-secondary); }
+.text-tertiary { color: var(--label-tertiary); }
+.text-blue { color: var(--system-blue); }
+.text-green { color: var(--system-green); }
+.text-red { color: var(--system-red); }
+.text-orange { color: var(--system-orange); }
+.text-purple { color: var(--system-purple); }
+
+/* Font Weights */
+.font-regular { font-weight: var(--font-weight-regular); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* ============================================================================
+   LAYOUT UTILITY CLASSES
+   ============================================================================ */
+
+/* Background Colors */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+
+/* Spacing */
+.p-0 { padding: var(--space-0); }
+.p-1 { padding: var(--space-1); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); }
+
+.m-0 { margin: var(--space-0); }
+.m-1 { margin: var(--space-1); }
+.m-2 { margin: var(--space-2); }
+.m-3 { margin: var(--space-3); }
+.m-4 { margin: var(--space-4); }
+.m-auto { margin: auto; }
+
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+
+/* Border Radius */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Shadows */
+.shadow-none { box-shadow: var(--shadow-none); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* Display */
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+.hidden { display: none; }
+
+/* Flex */
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.flex-1 { flex: 1; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* Width */
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.max-w-reading { max-width: var(--width-reading); }
+.max-w-form { max-width: var(--width-form); }
+.max-w-app { max-width: var(--width-app); }
+.max-w-container { max-width: var(--width-container); }
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Overflow */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+
+/* Cursor */
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+/* Opacity */
+.opacity-0 { opacity: 0; }
+.opacity-50 { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+
+/* Transitions */
+.transition-all {
+  transition-property: all;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-out);
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+/* ============================================================================
+   KEYFRAME ANIMATIONS
+   ============================================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Animation Classes */
+.animate-fade-in { animation: fadeIn var(--duration-normal) var(--ease-out); }
+.animate-fade-out { animation: fadeOut var(--duration-normal) var(--ease-out); }
+.animate-slide-up { animation: slideUp var(--duration-slow) var(--ease-out); }
+.animate-slide-down { animation: slideDown var(--duration-slow) var(--ease-out); }
+.animate-scale-in { animation: scaleIn var(--duration-normal) var(--ease-spring); }
+.animate-spin { animation: spin 0.8s linear infinite; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-shimmer { animation: shimmer 1.5s infinite; }
+
+/* Spring animation class using linear() */
+.animate-spring {
+  transition-timing-function: var(--ease-spring-linear);
+  transition-duration: 500ms;
+}
+
+/* ============================================================================
+   GLASS EFFECTS (includes Liquid Glass / iOS 26 approximation)
+
+   Liquid Glass uses a multi-layer approach:
+     1. backdrop-filter for blur/distortion
+     2. Low-opacity tint (10-25% white) — NOT opaque
+     3. Inset box-shadows for edge shine/specular highlights
+     4. Drop shadow for depth/floating
+     5. White foreground text with text-shadow for readability
+
+   Reference: WWDC 2025, lucasromerodb/liquid-glass-effect-macos,
+              alexerlandsson, Maxuiux CodePen implementations
+
+   Physics (kube.io): Snell's Law n₁·sin(θ₁) = n₂·sin(θ₂), n=1.5 for glass.
+   Apple uses squircle surface profile: y = ⁴√(1 - (1-x)⁴) for soft edge transitions.
+   True refraction uses SVG feDisplacementMap with pre-calculated vector field
+   encoded as RGB (R=X, G=Y, 128=neutral). Chrome-only for backdrop-filter + SVG.
+   ============================================================================ */
+
+/* ==========================================================================
+   LIQUID GLASS — iOS 26 Authentic System
+   Source: rdlabo-team/ionic-theme-ios26 api.scss
+
+   The glass-background pattern:
+   - background:      rgba(glass-bg-rgb, opacity)     — default 72%
+   - backdrop-filter:  blur(blur) saturate(saturate)    — default 2px / 360%
+   - box-shadow:       inset + outer glow               — uses glass-shadow-rgb
+   - border:           asymmetric 0.5px per side         — uses glass-border-rgb
+   - transform:        translateZ(0)                     — hardware acceleration
+   ========================================================================== */
+
+/* Default glass: 72% opacity, 2px blur, 360% saturate.
+   Used for: buttons (default fill), tab bars, segments, FABs, searchbar, popover, toast, loading */
+.glass {
+  background: rgba(var(--glass-bg-rgb), var(--glass-opacity, 0.72));
+  backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Glass overlay: 66.67% opacity, 8px blur. For: alerts, action-sheets, datetime */
+.glass-overlay {
+  background: rgba(var(--glass-bg-rgb), 0.6667);
+  backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+  -webkit-backdrop-filter: blur(8px) saturate(var(--glass-saturate, 360%));
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+  transform: translateZ(0);
+}
+
+/* Light glass button activation: reduced outer glow */
+.glass-activated {
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 8px -4px rgba(var(--glass-shadow-rgb), 0.92);
+}
+
+/* Dark glass button activation: 56% white, 7px blur, 180% saturate, 0.8px borders */
+.glass-activated-dark {
+  background: rgba(var(--glass-selected-rgb), 0.56);
+  backdrop-filter: blur(7px) saturate(180%);
+  -webkit-backdrop-filter: blur(7px) saturate(180%);
+  box-shadow: inset 0 0 16px 0 rgba(var(--glass-shadow-rgb), 0.55);
+  border-top: 0.8px solid rgba(var(--glass-selected-rgb), 0.8);
+  border-right: 0.8px solid rgba(var(--glass-selected-rgb), 0.4);
+  border-bottom: 0.8px solid rgba(var(--glass-selected-rgb), 0.8);
+  border-left: 0.8px solid rgba(var(--glass-selected-rgb), 0.6);
+}
+
+/* Control glass: 10% opacity, 0.5px blur, 120% saturate. For: toggle handle, slider knob on press */
+.glass-control {
+  background: rgba(var(--glass-bg-rgb), 0.1);
+  backdrop-filter: blur(0.5px) saturate(120%);
+  -webkit-backdrop-filter: blur(0.5px) saturate(120%);
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+  transform: translateZ(0);
+}
+
+/* Text on glass surfaces — always white for contrast against blurred bg */
+.glass-text {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.glass-text-secondary {
+  color: rgba(255, 255, 255, 0.65);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Navigation bar glass — default 72% opacity (same as .glass).
+   Text: use standard label colors (--label-primary), NOT white. */
+.glass-nav {
+  background: rgba(var(--glass-bg-rgb), 0.72);
+  backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+}
+
+/* Tab bar glass — floating pill with 40px radius.
+   Text: use standard label colors (--label-secondary inactive, --system-blue active). */
+.glass-tab {
+  background: rgba(var(--glass-bg-rgb), 0.72);
+  backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 2px)) saturate(var(--glass-saturate, 360%));
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+  border-radius: 40px;
+}
+
+/* SVG-enhanced Liquid Glass — adds refraction distortion (Chrome only).
+   Requires an inline SVG filter with feDisplacementMap. See colors.html demo.
+   Text: use .glass-text (white) — same rule as .glass (low opacity tint).
+   Fallback: degrades gracefully to standard .glass blur in non-Chrome browsers. */
+.glass-refract {
+  position: relative;
+  isolation: isolate;
+  background: rgba(var(--glass-bg-rgb), 0.15);
+  box-shadow:
+    inset 0 0 8px 0 rgba(var(--glass-shadow-rgb), 0.2),
+    0 0 10px 0 rgba(var(--glass-shadow-rgb), 0.82);
+  border-top: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-right: 0.5px solid rgba(var(--glass-border-rgb), 0.8);
+  border-bottom: 0.5px solid rgba(var(--glass-border-rgb), 1);
+  border-left: 0.5px solid rgba(var(--glass-border-rgb), 0.6);
+  /* backdrop-filter set via SVG url(#liquid-glass-filter) in markup */
+}
+
+/* Solid fallback when backdrop-filter is not supported */
+@supports not (backdrop-filter: blur(20px)) {
+  .glass,
+  .glass-nav,
+  .glass-tab,
+  .glass-overlay {
+    background: var(--bg-secondary);
+    border: 1px solid var(--separator);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ============================================================================
+   SAFE AREA INSETS (iOS)
+   ============================================================================ */
+
+.safe-area-inset {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-area-top { padding-top: env(safe-area-inset-top); }
+
+/* ============================================================================
+   SCROLLBAR STYLING
+   ============================================================================ */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--system-gray4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--system-gray3); }
+
+/* ============================================================================
+   SELECTION & FOCUS
+   ============================================================================ */
+
+::selection {
+  background: rgba(0, 122, 255, 0.3);
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+  :root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #FFFFFF;
+    --label-primary: #000000;
+    --label-secondary: #333333;
+  }
+
+  .no-print { display: none !important; }
+}

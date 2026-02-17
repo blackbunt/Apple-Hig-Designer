@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layouts - Apple HIG Design Tokens</title>
+  <link rel="stylesheet" href="../references/design-tokens.css">
+  <style>
+    body {
+      background: var(--bg-grouped-primary);
+      padding-bottom: var(--space-16);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(29, 29, 31, 0.72);
+    }
+
+    .topbar-back {
+      font-size: 17px;
+      color: var(--system-blue);
+      text-decoration: none;
+    }
+
+    .topbar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 14px;
+      background: var(--fill-tertiary);
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-system);
+      color: var(--label-primary);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .section { margin-bottom: var(--space-10); }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--label-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-card {
+      background: var(--bg-grouped-secondary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .demo-frame {
+      border: 1px solid var(--separator);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--bg-primary);
+    }
+
+    .component-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--label-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    /* ==================== NAVIGATION BAR ==================== */
+    .navbar-demo {
+      position: relative;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .navbar-demo {
+      background: rgba(29, 29, 31, 0.72);
+    }
+
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+      height: 52px;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--label-primary);
+      text-decoration: none;
+    }
+
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      gap: var(--space-6);
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--label-primary);
+      text-decoration: none;
+      padding: var(--space-2) 0;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .nav-link:hover { color: var(--system-blue); }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .btn-nav-text {
+      font-size: 14px;
+      font-family: var(--font-system);
+      color: var(--system-blue);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-nav-primary {
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      padding: 0 16px;
+      font-family: var(--font-system);
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      background: var(--system-blue);
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+    }
+
+    /* ==================== TAB BAR ==================== */
+    .tabbar-demo {
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-top: 1px solid var(--separator);
+    }
+
+    [data-theme="dark"] .tabbar-demo {
+      background: rgba(29, 29, 31, 0.85);
+    }
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      min-height: 49px;
+      padding: var(--space-1) var(--space-3);
+      text-decoration: none;
+      color: var(--label-secondary);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-system);
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .tab-item.active { color: var(--system-blue); }
+    .tab-icon { font-size: 24px; margin-bottom: 2px; }
+    .tab-label { font-size: 10px; font-weight: 500; }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar-demo {
+      display: flex;
+      height: 400px;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--separator);
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-4);
+      flex-shrink: 0;
+    }
+
+    .nav-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--label-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 var(--space-3);
+      margin-bottom: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .nav-section-title:first-child { margin-top: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 8px 12px;
+      font-size: 15px;
+      color: var(--label-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all var(--duration-fast) var(--ease-out);
+      margin-bottom: var(--space-1);
+      cursor: pointer;
+    }
+
+    .nav-item:hover { background: var(--fill-tertiary); color: var(--label-primary); }
+    .nav-item.active { background: var(--system-blue); color: white; }
+    .nav-item-icon { font-size: 18px; width: 20px; text-align: center; }
+
+    .sidebar-content {
+      flex: 1;
+      padding: var(--space-6);
+      overflow-y: auto;
+    }
+
+    /* ==================== HERO ==================== */
+    .hero-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      padding: var(--space-8) var(--space-4);
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    .hero-content { max-width: 680px; }
+
+    .hero-title {
+      font-size: clamp(34px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--label-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(17px, 2.5vw, 21px);
+      color: var(--label-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 24px;
+      font-family: var(--font-system);
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+    }
+
+    /* ==================== CARD GRID ==================== */
+    .card-grid-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-6);
+    }
+
+    .feature-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: transform var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    [data-theme="dark"] .feature-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border-radius: var(--radius-lg);
+      margin: 0 auto var(--space-3);
+      color: white;
+    }
+
+    .feature-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--label-secondary);
+      line-height: 1.4;
+    }
+
+    /* ==================== SETTINGS LIST ==================== */
+    .settings-container { max-width: 600px; margin: 0 auto; padding: var(--space-4); }
+    .settings-group { margin-bottom: var(--space-6); }
+    .settings-group-title {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--label-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+    .settings-card {
+      background: var(--bg-tertiary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .settings-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      min-height: 44px;
+      border-bottom: 0.5px solid var(--separator);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+    .settings-item:last-child { border-bottom: none; }
+    .settings-item:hover { background: var(--bg-secondary); }
+    .settings-item-content { display: flex; align-items: center; gap: var(--space-3); }
+    .settings-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+      border-radius: 6px;
+    }
+    .settings-text { display: flex; flex-direction: column; }
+    .settings-label { font-size: 17px; color: var(--label-primary); }
+    .settings-value { font-size: 13px; color: var(--label-secondary); }
+    .settings-chevron { font-size: 14px; color: var(--label-tertiary); }
+    .settings-footer {
+      font-size: 13px;
+      color: var(--label-secondary);
+      margin-top: var(--space-2);
+      margin-left: var(--space-4);
+      line-height: 1.4;
+    }
+
+    /* Toggle inline */
+    /* Toggle — iOS 26 (64×28, glass activation on press) */
+    .mini-toggle {
+      position: relative;
+      width: var(--toggle-width, 64px);
+      height: var(--toggle-height, 28px);
+      display: inline-block;
+    }
+    .mini-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .mini-toggle .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--toggle-track-off, rgba(0, 0, 0, 0.23));
+      border-radius: 28px;
+      transition: background 280ms ease, transform 280ms ease;
+      overflow: visible;
+    }
+    .mini-toggle .toggle-track::before {
+      content: '';
+      position: absolute;
+      width: var(--toggle-handle-width, 38px);
+      height: var(--toggle-handle-height, 24px);
+      left: 2px;
+      top: 2px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: var(--shadow-toggle-knob);
+      transition: transform 280ms ease, box-shadow 200ms ease, background-color 250ms ease;
+    }
+    .mini-toggle input:checked + .toggle-track { background: var(--system-green); }
+    .mini-toggle input:checked + .toggle-track::before {
+      transform: translateX(calc(var(--toggle-width, 64px) - var(--toggle-handle-width, 38px) - 4px));
+    }
+    .mini-toggle input:active + .toggle-track::before {
+      transform: scale(1.4, 1.6) translateZ(0);
+      background: rgba(var(--glass-bg-rgb, 255, 255, 255), 0.1);
+      backdrop-filter: blur(0.5px) saturate(120%);
+      box-shadow: inset 0 0 8px 0 var(--toggle-track-off, rgba(0, 0, 0, 0.23));
+    }
+    .mini-toggle input:checked:active + .toggle-track::before {
+      box-shadow:
+        inset 0 8px 8px -8px var(--system-green),
+        inset 8px 0 8px -8px var(--toggle-track-off, rgba(0, 0, 0, 0.23)),
+        inset -8px 0 8px -8px var(--system-green);
+    }
+
+    /* ==================== DATA TABLE ==================== */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      background: var(--bg-tertiary);
+    }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th {
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      font-weight: 600;
+      color: var(--label-secondary);
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--separator);
+    }
+    .data-table td {
+      padding: var(--space-3) var(--space-4);
+      color: var(--label-primary);
+      border-bottom: 0.5px solid var(--separator);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--bg-secondary); }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: var(--space-2);
+    }
+
+    /* ==================== EMPTY & ERROR STATES ==================== */
+    .state-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12) var(--space-4);
+      text-align: center;
+    }
+
+    .state-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border-radius: 50%;
+      margin-bottom: var(--space-4);
+    }
+
+    .state-title {
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--label-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .state-desc {
+      font-size: 15px;
+      color: var(--label-secondary);
+      max-width: 280px;
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+    }
+
+    /* ==================== LOADING / SKELETON ==================== */
+    .skeleton {
+      background: linear-gradient(90deg,
+        var(--system-gray5) 25%,
+        var(--system-gray6) 50%,
+        var(--system-gray5) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    .skeleton-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; }
+    .skeleton-title { height: 20px; width: 60%; margin-bottom: var(--space-2); }
+    .skeleton-text { height: 14px; width: 100%; margin-bottom: var(--space-1); }
+    .skeleton-text-short { height: 14px; width: 40%; }
+
+    .skeleton-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 0.5px solid var(--separator);
+    }
+
+    .skeleton-row:last-child { border-bottom: none; }
+
+    .skeleton-content { flex: 1; }
+
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-4);
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html" class="topbar-back">&#8249; Zurück</a>
+    <span class="topbar-title">Layouts</span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">&#9789;</span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </nav>
+
+  <div class="container">
+
+    <!-- Navigation Bar -->
+    <div class="section">
+      <h2 class="section-title">Navigation Bar</h2>
+      <div class="demo-frame">
+        <nav class="navbar-demo">
+          <div class="navbar-container">
+            <a class="navbar-brand">AppName</a>
+            <ul class="navbar-menu">
+              <li><a class="nav-link" style="color: var(--system-blue);">Features</a></li>
+              <li><a class="nav-link">Preise</a></li>
+              <li><a class="nav-link">Docs</a></li>
+            </ul>
+            <div class="navbar-actions">
+              <button class="btn-nav-text">Anmelden</button>
+              <button class="btn-nav-primary">Starten</button>
+            </div>
+          </div>
+        </nav>
+        <div style="padding: var(--space-6) var(--space-4);">
+          <div style="font-size: 34px; font-weight: 700; color: var(--label-primary); margin-bottom: var(--space-2);">Features</div>
+          <div style="font-size: 17px; color: var(--label-secondary);">Entdecke, was AppName zu bieten hat.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="section">
+      <h2 class="section-title">Tab Bar</h2>
+      <div class="demo-frame">
+        <div style="padding: var(--space-6) var(--space-4); min-height: 120px;">
+          <div style="font-size: 15px; color: var(--label-secondary); text-align: center;">Seiteninhalt</div>
+        </div>
+        <nav class="tabbar-demo" id="tabbar">
+          <button class="tab-item active" onclick="activateTab(this)">
+            <span class="tab-icon">&#127968;</span>
+            <span class="tab-label">Home</span>
+          </button>
+          <button class="tab-item" onclick="activateTab(this)">
+            <span class="tab-icon">&#128269;</span>
+            <span class="tab-label">Suche</span>
+          </button>
+          <button class="tab-item" onclick="activateTab(this)">
+            <span class="tab-icon">&#10010;</span>
+            <span class="tab-label">Neu</span>
+          </button>
+          <button class="tab-item" onclick="activateTab(this)">
+            <span class="tab-icon">&#128276;</span>
+            <span class="tab-label">Aktivität</span>
+          </button>
+          <button class="tab-item" onclick="activateTab(this)">
+            <span class="tab-icon">&#128100;</span>
+            <span class="tab-label">Profil</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="section">
+      <h2 class="section-title">Sidebar (macOS / iPadOS)</h2>
+      <div class="demo-frame sidebar-demo">
+        <div class="sidebar">
+          <div class="nav-section-title">Favoriten</div>
+          <a class="nav-item active">
+            <span class="nav-item-icon">&#127968;</span> Dashboard
+          </a>
+          <a class="nav-item">
+            <span class="nav-item-icon">&#128202;</span> Statistiken
+          </a>
+          <a class="nav-item">
+            <span class="nav-item-icon">&#128232;</span> Nachrichten
+          </a>
+          <div class="nav-section-title">Verwalten</div>
+          <a class="nav-item">
+            <span class="nav-item-icon">&#128101;</span> Team
+          </a>
+          <a class="nav-item">
+            <span class="nav-item-icon">&#9881;</span> Einstellungen
+          </a>
+          <a class="nav-item">
+            <span class="nav-item-icon">&#128218;</span> Dokumente
+          </a>
+        </div>
+        <div class="sidebar-content">
+          <div style="font-size: 28px; font-weight: 700; color: var(--label-primary); margin-bottom: var(--space-4);">Dashboard</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div style="background: var(--bg-secondary); border-radius: var(--radius-lg); padding: var(--space-4);">
+              <div style="font-size: 13px; color: var(--label-secondary);">Besucher</div>
+              <div style="font-size: 28px; font-weight: 700; color: var(--label-primary);">12.4k</div>
+            </div>
+            <div style="background: var(--bg-secondary); border-radius: var(--radius-lg); padding: var(--space-4);">
+              <div style="font-size: 13px; color: var(--label-secondary);">Umsatz</div>
+              <div style="font-size: 28px; font-weight: 700; color: var(--system-green);">48.2k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="section">
+      <h2 class="section-title">Hero Section</h2>
+      <div class="demo-frame">
+        <div class="hero-demo">
+          <div class="hero-content">
+            <div class="hero-title">Baue etwas Wundervolles.</div>
+            <div class="hero-subtitle">Erstelle beeindruckende Interfaces mit dem Apple Human Interface Guidelines Design-System.</div>
+            <div class="hero-actions">
+              <button class="btn-hero" style="background: var(--system-blue); color: white;">Jetzt starten</button>
+              <button class="btn-hero" style="background: var(--fill-tertiary); color: var(--label-primary);">Mehr erfahren</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Grid -->
+    <div class="section">
+      <h2 class="section-title">Card Grid</h2>
+      <div class="demo-frame">
+        <div class="card-grid-demo">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: var(--system-blue);">&#9889;</div>
+            <div class="feature-title">Schnell</div>
+            <div class="feature-desc">Optimierte Performance für alle Plattformen.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: var(--system-green);">&#9989;</div>
+            <div class="feature-title">Zuverlässig</div>
+            <div class="feature-desc">Getestet und bewährt in Produktionsumgebungen.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: var(--system-purple);">&#10024;</div>
+            <div class="feature-title">Elegant</div>
+            <div class="feature-desc">Apple-Qualität in jedem Detail des Interfaces.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings List -->
+    <div class="section">
+      <h2 class="section-title">Settings-Liste (Gruppiert)</h2>
+      <div class="demo-frame" style="background: var(--bg-grouped-primary);">
+        <div class="settings-container">
+          <div class="settings-group">
+            <div class="settings-group-title">Konto</div>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <span class="settings-icon" style="background: var(--system-blue);">&#128100;</span>
+                  <div class="settings-text">
+                    <span class="settings-label">Profil</span>
+                    <span class="settings-value">Max Mustermann</span>
+                  </div>
+                </div>
+                <span class="settings-chevron">&#8250;</span>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <span class="settings-icon" style="background: var(--system-gray);">&#9993;</span>
+                  <div class="settings-text">
+                    <span class="settings-label">E-Mail</span>
+                    <span class="settings-value">max@example.com</span>
+                  </div>
+                </div>
+                <span class="settings-chevron">&#8250;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Einstellungen</div>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <span class="settings-icon" style="background: var(--system-green);">&#128276;</span>
+                  <span class="settings-label">Benachrichtigungen</span>
+                </div>
+                <label class="mini-toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <span class="settings-icon" style="background: var(--system-indigo);">&#127760;</span>
+                  <span class="settings-label">Sprache</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-2);">
+                  <span style="font-size: 17px; color: var(--label-secondary);">Deutsch</span>
+                  <span class="settings-chevron">&#8250;</span>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <span class="settings-icon" style="background: var(--system-orange);">&#128274;</span>
+                  <span class="settings-label">Datenschutz</span>
+                </div>
+                <span class="settings-chevron">&#8250;</span>
+              </div>
+            </div>
+            <div class="settings-footer">Benachrichtigungen können jederzeit in den Systemeinstellungen geändert werden.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="section">
+      <h2 class="section-title">Datentabelle</h2>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Rolle</th>
+              <th>Aktivität</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 500;">Anna Schmidt</td>
+              <td><span class="status-dot" style="background: var(--system-green);"></span>Online</td>
+              <td style="color: var(--label-secondary);">Admin</td>
+              <td style="color: var(--label-tertiary);">Gerade eben</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Thomas Müller</td>
+              <td><span class="status-dot" style="background: var(--system-green);"></span>Online</td>
+              <td style="color: var(--label-secondary);">Editor</td>
+              <td style="color: var(--label-tertiary);">Vor 5 Min.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Lisa Weber</td>
+              <td><span class="status-dot" style="background: var(--system-yellow);"></span>Abwesend</td>
+              <td style="color: var(--label-secondary);">Viewer</td>
+              <td style="color: var(--label-tertiary);">Vor 2 Std.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Jan Fischer</td>
+              <td><span class="status-dot" style="background: var(--system-gray);"></span>Offline</td>
+              <td style="color: var(--label-secondary);">Editor</td>
+              <td style="color: var(--label-tertiary);">Gestern</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Empty & Error States -->
+    <div class="section">
+      <h2 class="section-title">Leere & Fehlerzustände</h2>
+      <div class="states-grid">
+        <div class="demo-frame">
+          <div class="state-demo">
+            <div class="state-icon" style="background: var(--bg-secondary); color: var(--label-tertiary);">&#128269;</div>
+            <div class="state-title">Keine Ergebnisse</div>
+            <div class="state-desc">Versuche einen anderen Suchbegriff oder ändere die Filter.</div>
+            <button style="display: inline-flex; align-items: center; min-height: 44px; padding: 12px 24px; font-family: var(--font-system); font-size: 17px; font-weight: 600; color: white; background: var(--system-blue); border: none; border-radius: var(--radius-full); cursor: pointer;">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="demo-frame">
+          <div class="state-demo">
+            <div class="state-icon" style="background: rgba(255, 59, 48, 0.12); color: var(--system-red);">&#9888;</div>
+            <div class="state-title">Verbindungsfehler</div>
+            <div class="state-desc">Prüfe deine Internetverbindung und versuche es erneut.</div>
+            <button style="display: inline-flex; align-items: center; min-height: 44px; padding: 12px 24px; font-family: var(--font-system); font-size: 17px; font-weight: 600; color: white; background: var(--system-blue); border: none; border-radius: var(--radius-full); cursor: pointer;">Erneut versuchen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading / Skeleton -->
+    <div class="section">
+      <h2 class="section-title">Ladezustände (Skeleton)</h2>
+      <div class="section-card">
+        <div class="skeleton-row">
+          <div class="skeleton skeleton-avatar"></div>
+          <div class="skeleton-content">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text-short"></div>
+          </div>
+        </div>
+        <div class="skeleton-row">
+          <div class="skeleton skeleton-avatar"></div>
+          <div class="skeleton-content">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text-short"></div>
+          </div>
+        </div>
+        <div class="skeleton-row">
+          <div class="skeleton skeleton-avatar"></div>
+          <div class="skeleton-content">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text-short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+        html.style.colorScheme = 'light';
+        document.getElementById('theme-icon').textContent = '\u263D';
+        document.getElementById('theme-label').textContent = 'Dark';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        html.style.colorScheme = 'dark';
+        document.getElementById('theme-icon').textContent = '\u2600';
+        document.getElementById('theme-label').textContent = 'Light';
+      }
+    }
+
+    function activateTab(el) {
+      document.querySelectorAll('#tabbar .tab-item').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>
