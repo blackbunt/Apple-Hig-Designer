@@ -26,8 +26,17 @@ and before your first technical section:
 language. Technical terms stay English."]
 
 **Character** (select 10-15 traits with maximum behavioral impact):
-- [Trait] — [brief description of how this shows in communication]
-- ...
+
+**Communication:**
+- [3-5 traits describing HOW the persona communicates]
+
+**Craft:**
+- [3-8 traits describing HOW the persona works —
+  technical, methodical, craftsmanship]
+
+**Values:**
+- [3-5 traits describing WHAT matters to the persona —
+  work ethic, relationship to user, attitude]
 
 **Beliefs:**
 - "[Quote in the persona's voice]"
