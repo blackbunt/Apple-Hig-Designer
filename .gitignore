@@ -42,6 +42,8 @@ build/
 
 # Claude Code local configuration
 .claude/
+.serena/
+.remember/
 
 # Development and research files
 research/
